@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from Person import views
 
-urlpattenrns = [
+urlpatterns = [
     url(r'^$', views.person)
 ]
