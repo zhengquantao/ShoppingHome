@@ -1,178 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>注册</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <style>
-        .header {
-            width: 100%;
-            height: 50px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .content {
-            margin-top: 40px;
-            width: 100%;
-            height: 500px;
-            overflow: hidden;
-            display: flex;
-        }
-
-        .content-left {
-            width: 50%;
-            height: 500px;
-        }
-
-        .content-border {
-            width: 1px;
-            height: 500px;
-            background-color: #eee;
-        }
-
-        .content-right {
-            height: 500px;
-            width: 500px;
-            margin-left: 50px;
-        }
-
-        .content-right-header {
-
-            height: 40px;
-            width: 500px;
-            overflow: hidden;
-            display: flex;
-            text-align: center;
-            line-height: 40px;
-            border-bottom: 1px solid #ccc;
-        }
-
-        .user-1 {
-            font-size: 25px;
-            color: #ccc;
-        }
-
-        .user-2 {
-            margin-left: 350px;
-            height: 50px;
-            width: 40px;
-            color: green;
-        }
-
-        .content-right-content {
-            margin-top: 20px;
-        }
-
-        .line-w {
-            height: 80px;
-            width: 450px;
-            text-align: center;
-            font-size: 20px;
-            color: #eee;
-        }
-
-        .line {
-            display: flex;
-            overflow: hidden;
-
-        }
-
-        .name-left {
-            width: 100px;
-            height: 35px;
-        }
-
-        .input {
-            height: 35px;
-            width: 300px;
-            border: 1px solid #eee;
-            margin-left: 10px;
-        }
-
-        .error {
-            height: 25px;
-            width: 400px;
-            font-size: 15px;
-            color: red;
-            padding-left: 50px;
-        }
-
-        .btn {
-            margin-top: 20px;
-            width: 420px;
-            height: 30px;
-            color: white;
-            font-size: 15px;
-            background-color: green;
-            border: none;
-        }
-
-    </style>
-</head>
-<body>
-<div class="container">
-    <div class="header"></div>
-    <div class="content">
-        <div class="content-left"></div>
-        <div class="content-border"></div>
-        <div class="content-right">
-            <div class="content-right-header">
-                <div class="user-1">用户注册</div>
-                <div class="user-2"><a>登录</a></div>
-            </div>
-            <div class="content-right-content">
-                <div>
-                    <div class="line-w">
-                        <div class="line">
-                            <div class="name-left"><label for="user">用户名:</label></div>
-                            <div><input type="text" class="input" name="user" id="user"></div>
-                        </div>
-                        <div class="error" id="u_error"></div>
-                    </div>
-                    <div class="line-w">
-                        <div class="line">
-                            <div class="name-left"><label for="pwd">密码：</label></div>
-                            <div><input type="password" class="input" name="pwd" id="pwd"></div>
-
-                        </div>
-                        <div class="error" id="p_error"></div>
-                    </div>
-                    <div class="line-w">
-                        <div class="line">
-                            <div class="name-left">
-                                <lable for="rpwd">确认密码：</lable>
-                            </div>
-                            <div><input type="password" class="input" name="rpwd" id="rpwd"></div>
-                        </div>
-                        <div class="error" id="rp_error"></div>
-                    </div>
-                    <div class="line-w">
-                        <div class="line">
-                            <div class="name-left"><label for="email">邮箱：</label></div>
-                            <div><input type="email" class="input" name="email" id="email"></div>
-                        </div>
-                        <div class="error" id="e_error"></div>
-                    </div>
-                    <div>
-                        <div style="font-size: 20px;color:#eee;">
-                            <input type="checkbox" name="check" id="check">是否同意
-                        </div>
-                    </div>
-                    <div>
-                        <button class="btn" id="btn">注册</button>
-                    </div>
+{% extends 'login/base.html' %}
+{% block header %}
+    <div class="user-1">用户注册</div>
+    <div class="user-2"><a href="/login/">登录</a></div>
+{% endblock %}
+{% block page %}
+    <div>
+        <form>
+            {% csrf_token %}
+            <div class="line-w">
+                <div class="line">
+                    <div class="name-left"><label for="user">用户名:</label></div>
+                    <div><input type="text" class="input" name="user" id="user"></div>
                 </div>
-
+                <div class="error" id="u_error">{{ error }}</div>
             </div>
+            <div class="line-w">
+                <div class="line">
+                    <div class="name-left"><label for="pwd">密码：</label></div>
+                    <div><input type="password" class="input" name="pwd" id="pwd"></div>
+                </div>
+                <div class="error" id="p_error"></div>
+            </div>
+            <div class="line-w">
+                <div class="line">
+                    <div class="name-left">
+                        <lable for="rpwd">确认密码：</lable>
+                    </div>
+                    <div><input type="password" class="input" name="rpwd" id="rpwd"></div>
+                </div>
+                <div class="error" id="rp_error"></div>
+            </div>
+            <div class="line-w">
+                <div class="line">
+                    <div class="name-left"><label for="email">邮箱：</label></div>
+                    <div><input type="email" class="input" name="email" id="email"></div>
+                </div>
+                <div class="error" id="e_error"></div>
+            </div>
+            <div>
+                <div style="font-size: 20px;color:#eee;">
+                    <input type="checkbox" name="check" id="check_agree">是否同意
+                </div>
+            </div>
+        </form>
+        <div>
+            <button class="btn" id="btn">注册</button>
         </div>
     </div>
-    <footer>
-
-    </footer>
-
-</div>
-<script src="/static/js/jquery-3.3.1.js"></script>
-<script src="/static/js/register.js"></script>
-</body>
-</html>
+{% endblock %}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .header {
+            height: 30px;
+            width: 100%;
+            background-color: #eee;
+            line-height: 30px;
+            overflow: hidden;
+        }
+
+        .header-left {
+            float: left;
+        }
+
+        .header-right {
+            float: right;
+        }
+
+        .header-right a {
+            margin-right: 10px;
+            margin-left: 10px;
+            text-decoration: none;
+        }
+
+        .header-right span {
+            height: 5px;
+            border: 1px solid #bbb;
+        }
+        .content-header{
+            height:100px;
+            line-height: 100px;
+            overflow: hidden;
+        }
+        .content-header-left{
+            float:left;
+            display: flex;
+        }
+        .logo{
+            height:80px;
+            width:130px;
+            margin-right:10px;
+        }
+        .content-header-left span{
+            height:10px;
+            border:1px solid #ccc;
+        }
+        .content-header-mess{
+            margin-left: 10px;
+        }
+
+        .content-header-right{
+            float:right;
+        }
+        .content-header-right{
+            width:550px;
+            height:80px;
+        }
+        .content-header-right input{
+            height:40px;
+            width:450px;
+
+            border:1px solid green;
+        }
+        .content-header-right button{
+            height:40px;
+            width:80px;
+            color:white;
+
+            background-color: green;
+            border:none;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="header-left">欢迎来到购物世界！</div>
+        <div class="header-right">
+            <a href="">登录</a>
+            <span></span>
+            <a href="">注册</a>
+            <span></span>
+            <a href="">用户中心</a>
+            <span></span>
+            <a href="">我的购物车</a>
+            <span></span>
+            <a href="">我的订单</a>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="content-header">
+            <div class="content-header-left">
+                <div class="logo"><img src=""></div>
+                <div>
+                    <span></span>
+                </div>
+                <div class="content-header-mess">用户中心</div>
+            </div>
+            <div class="content-header-right">
+                <input type="text" placeholder="搜索商品">
+                <button>搜索</button>
+            </div>
+
+        </div>
+        <div class="content-body">
+            <div class="content-body-left"></div>
+            <div class="content-body-right"></div>
+
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

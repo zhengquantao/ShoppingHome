@@ -1,5 +1,9 @@
 from django.shortcuts import render
+from Login.models import UserInfo
 
 
 def person(request):
-    return render(request, 'person.html')
+    user = request.session.get('user')
+    ret_user = UserInfo.objects.filter(name=user).first()
+    # print(ret_user.name)
+    return render(request, 'person/person.html', {"user": ret_user})

@@ -1,17 +1,35 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-
-    <link rel="stylesheet" href="">
-</head>
-
-<body>
-<h1>这个是login</h1>
-</body>
-
-</html>
+<!--继承母版-->
+{% extends 'login/base.html' %}
+{% block header %}
+    <div class="user-1">用户登录</div>
+    <div class="user-2"><a href="/login/register/">注册</a></div>
+{% endblock %}
+{% block page %}
+    <div>
+        <form>
+            {% csrf_token %}
+            <div class="line-w">
+                <div class="line">
+                    <div class="name-left"><label for="login_user">用户名:</label></div>
+                    <div><input type="text" class="input" value="{{ user }}"name="user" id="login_user"></div>
+                </div>
+                <div class="error" id="login_user_error">{{ error }}</div>
+            </div>
+            <div class="line-w">
+                <div class="line">
+                    <div class="name-left"><label for="login_pwd">密码：</label></div>
+                    <div><input type="password" class="input" name="pwd" id="login_pwd"></div>
+                </div>
+                <div class="error" id="login_pwd_error"></div>
+            </div>
+            <div>
+                <div style="font-size: 20px;color:#eee;">
+                    <input type="checkbox" name="check" id="login_choose">记住密码
+                </div>
+            </div>
+        </form>
+        <div>
+            <button class="btn" id="login_btn">按 钮</button>
+        </div>
+    </div>
+{% endblock %}
