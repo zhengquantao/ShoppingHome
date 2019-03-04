@@ -13,3 +13,12 @@ class UserInfo(models.Model):
     email = models.CharField(max_length=32, default='')
     phone = models.CharField(max_length=11, default='')
     receiver = models.CharField(max_length=64, default='')
+
+    # blog = models.ManyToManyField(to="Address", to_field="name", null=True)
+
+
+# class Address(models.Model):
+#     receiver = models.CharField(max_length=16)
+#     address = models.CharField(max_length=64)
+#     code = models.CharField(max_length=16)
+#     phone = models.CharField(max_length=11)

@@ -5,6 +5,9 @@
     <title>个人中心</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+        a{
+            text-decoration:none;
+        }
         .header {
             height: 30px;
             width: 100%;
@@ -42,8 +45,9 @@
         }
         .logo{
             height:80px;
-            width:130px;
+            width:180px;
             margin-right:10px;
+            background-color: green;
         }
         .content-header-left span{
             height:10px;
@@ -74,7 +78,136 @@
             background-color: green;
             border:none;
         }
+        .content-body{
+            overflow:hidden;
+            height:800px;
+            width:100%;
+        }
+        .content-body-left{
+            float:left;
+            width:200px;
+            height:800px;
+            background-color:#eee;
+        }
+        .menu{
+            height:50px;
+            width:100%;
 
+            line-height:50px;
+            text-align: center;
+            border-bottom: 1px solid #bbb;
+        }
+         .menu-person{
+            height:80px;
+            width:100%;
+             font-size: 15px;
+            line-height:80px;
+            text-align: center;
+        }
+         .menu-order{
+            height:80px;
+            width:100%;
+             font-size: 15px;
+            line-height:80px;
+             text-align: center;
+        }
+         .menu-address{
+            height:80px;
+            width:100%;
+             font-size: 15px;
+            line-height:80px;
+             text-align: center;
+        }
+
+         .content-body-right{
+             float:right;
+             width:1000px;
+
+         }
+        .now-address{
+            height:150px;
+            width:100%;
+        }
+        .now-address-title{
+            height:35px;
+            line-height:35px;
+            font-size:20px;
+        }
+        .now-address-body{
+            height:80px;
+            width:100%;
+            background-color:#f5f5f5;
+        }
+        .now-address-now{
+            margin-left:20px;
+            height:50px;
+            width:100%;
+            line-height:50px;
+            font-size:18px;
+        }
+        .address-detail{
+            margin-left:20px;
+            height:50px;
+            width:100%;
+            font-size:15px;
+        }
+         .edit-address-body{
+            height:800px;
+            width:100%;
+            background-color:#f5f5f5;
+        }
+         .edit-content{
+             height:500px;
+             width:100%;
+         }
+        .receiver{
+            padding-top: 20px;
+            margin-left:98px;
+            height:50px;
+
+        }
+        .receiver input{
+            height:35px;
+            width:300px;
+        }
+        .p_address{
+            line-height: 50px;
+             margin-top: 20px;
+            margin-left:80px;
+            height:70px;
+        }
+         textarea{
+             height:65px;
+            width:300px;
+        }
+        .zip_code{
+             margin-top: 20px;
+            margin-left:115px;
+            height:50px;
+        }
+        .zip_code input{
+            height:35px;
+            width:300px;
+        }
+        .phone{
+            margin-top: 20px;
+             margin-left:115px;
+            height:50px;
+        }
+        .phone input{
+            height:35px;
+            width:300px;
+        }
+        .area-btn{
+            margin-top: 20px;
+            margin-left:375px;
+            height:35px;
+            width:80px;
+            font-size:20px;
+            color:white;
+            border: none;
+            background-color:green;
+        }
     </style>
 </head>
 <body>
@@ -93,7 +226,6 @@
             <a href="">我的订单</a>
         </div>
     </div>
-
     <div class="content">
         <div class="content-header">
             <div class="content-header-left">
@@ -110,9 +242,45 @@
 
         </div>
         <div class="content-body">
-            <div class="content-body-left"></div>
-            <div class="content-body-right"></div>
-
+            <div class="content-body-left">
+                <div class="menu">用户中心</div>
+                <div class="menu-person"><a href="">个人信息</a></div>
+                <div class="menu-order"><a href="">全部订单</a></div>
+                <div class="menu-address"><a href="">收货地址</a></div>
+            </div>
+            <div class="content-body-right">
+                <div class="now-address">
+                    <div class="now-address-title">收货地址</div>
+                    <div class="now-address-body">
+                        <div class="now-address-now">
+                            当前地址
+                        </div>
+                        <div class="address-detail">北京故宫 </div>
+                    </div>
+                </div>
+                <div class="now-address">
+                    <div class="now-address-title">编辑地址</div>
+                    <div class="edit-address-body">
+                        <form>
+                        <div class="edit-content">
+                            <div class="receiver">
+                                收件人:<input type="text" id="receiver">
+                            </div>
+                            <div class="p_address">
+                                详细地址:<textarea id="address"></textarea>
+                            </div>
+                            <div class="zip_code">
+                                邮编:<input type="text" id="zip_code">
+                            </div>
+                            <div class="phone">
+                                手机:<input type="text" id="phone">
+                            </div>
+                            <button class="area-btn" id="area-btn">提交</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
