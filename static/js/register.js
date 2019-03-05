@@ -20,7 +20,6 @@ user.blur(function () {
         u_error.text('名字格式不正确')
     }else{
         $.get('/login/register_exit/', {"user":user.val()}, function(data){
-            console.log(data);
             if(data.count==1){
                 u_error.text('用户名已存在！');
                 user_check =  false
@@ -114,3 +113,51 @@ login_pwd.hover(function(){
 login_user.hover(function(){
     login_user_error.empty()
 });
+
+/**
+ * page : person
+ * */
+
+/*自定义弹框*/
+function alert(e){
+   $(".container").append(
+       "<div id='body'>"+
+       "<div id='mark' style='opacity:0.5;position:fixed;z-index:1;left:0;top:0;height: 100%;width: 100%; background-color: #fff'>"+"</div>"+
+       "<div class='alert'  style='z-index: 2; height:200px;width:400px;position:fixed;top:30%;left:35%;background-color: #bbb;'>"+
+       "<div class='alert-mess' style='height:100px;width: 100%;text-align: center;line-height: 100px;font-size: 20px;color:white'>"+e+"</div>"
+       +"<div class='alert-btn' style='height:100px;width:100%;'><button id='btn-sure' style='height:35px;width:80px;background-color: green;border: none; color:white;margin-top:45px;margin-left:50px;'>"+
+       "确认"+"</button><button id='btn-clear' style='height:35px;width:80px;background-color: red; border: none; color:white;margin-left:140px'>"+"取消"+
+       "</button></div>" +"</div>"+
+       "</div>")
+}
+$('#area-btn').on('click', function () {
+    alert("确定要更改？");
+    //点击模版关闭
+    $('#mark').click(function () {
+        $('#body').remove()
+    });
+    //点击取消
+    $('#btn-clear').click(function () {
+        $('#body').remove();
+    });
+    //点击确认发送
+    $('#btn-sure').click(function () {
+        console.log('before', $('#header').text().length);
+        if ($('#receiver').val().length != 0 && $('#address').val().length != 0 && $('#zip_code').val().length != 0 && $('#phone').val().length != 0 && $('#header').text().length != 0) {
+            console.log('send---')
+            $.post('/person/update/', {
+                'receiver': $('#receiver').val(),
+                'address': $('#address').val(),
+                'code': $('#zip_code').val(),
+                'phone': $('#phone').val(),
+                'user': $('#header').text(),
+                "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val()
+            }, function(data){
+                if(data.code == 1){
+                    location.href = '/person/address/'
+                }
+            })
+        }
+    });
+});
+

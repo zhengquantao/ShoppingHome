@@ -1,0 +1,238 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.header {
+    height: 30px;
+    width: 100%;
+    background-color: #eee;
+    line-height: 30px;
+    overflow: hidden;
+}
+
+.header-left {
+    float: left;
+}
+
+.header-right {
+    float: right;
+}
+
+.header-right a {
+    margin-right: 10px;
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+.header-right span {
+    height: 5px;
+    border: 1px solid #bbb;
+}
+
+.content-header {
+    height: 100px;
+    line-height: 100px;
+    overflow: hidden;
+}
+
+.content-header-left {
+    float: left;
+    display: flex;
+}
+
+.logo {
+    height: 80px;
+    width: 180px;
+    margin-right: 10px;
+    background-color: green;
+}
+
+.content-header-left span {
+    height: 10px;
+    border: 1px solid #ccc;
+}
+
+.content-header-mess {
+    margin-left: 10px;
+}
+
+.content-header-right {
+    float: right;
+}
+
+.content-header-right {
+    width: 550px;
+    height: 80px;
+}
+
+.content-header-right input {
+    height: 40px;
+    width: 450px;
+
+    border: 1px solid green;
+}
+
+.content-header-right button {
+    height: 40px;
+    width: 80px;
+    color: white;
+
+    background-color: green;
+    border: none;
+}
+
+.content-body {
+    overflow: hidden;
+    height: 800px;
+    width: 100%;
+}
+
+.content-body-left {
+    float: left;
+    width: 200px;
+    height: 800px;
+    background-color: #eee;
+}
+
+.menu {
+    height: 50px;
+    width: 100%;
+
+    line-height: 50px;
+    text-align: center;
+    border-bottom: 1px solid #bbb;
+}
+
+.menu-person {
+    height: 80px;
+    width: 100%;
+    font-size: 15px;
+    line-height: 80px;
+    text-align: center;
+}
+
+.menu-order {
+    height: 80px;
+    width: 100%;
+    font-size: 15px;
+    line-height: 80px;
+    text-align: center;
+}
+
+.menu-address {
+    height: 80px;
+    width: 100%;
+    font-size: 15px;
+    line-height: 80px;
+    text-align: center;
+}
+
+.content-body-right {
+    float: right;
+    width: 85%;
+
+}
+
+.now-address {
+    height: 150px;
+    width: 100%;
+}
+
+.now-address-title {
+    height: 35px;
+    line-height: 35px;
+    font-size: 20px;
+}
+
+.now-address-body {
+    height: 80px;
+    width: 100%;
+    background-color: #f5f5f5;
+}
+
+.now-address-now {
+    margin-left: 20px;
+    height: 50px;
+    width: 100%;
+    line-height: 50px;
+    font-size: 18px;
+}
+
+.address-detail {
+    margin-left: 20px;
+    height: 50px;
+    width: 100%;
+    font-size: 15px;
+}
+
+.edit-address-body {
+    height: 800px;
+    width: 100%;
+    background-color: #f5f5f5;
+}
+
+.edit-content {
+    height: 330px;
+    width: 100%;
+}
+
+.receiver {
+    padding-top: 20px;
+    margin-left: 98px;
+    height: 50px;
+
+}
+
+.receiver input {
+    height: 35px;
+    width: 300px;
+}
+
+.p_address {
+    line-height: 50px;
+    margin-top: 20px;
+    margin-left: 80px;
+    height: 70px;
+}
+
+textarea {
+    height: 65px;
+    width: 300px;
+}
+
+.zip_code {
+    margin-top: 20px;
+    margin-left: 115px;
+    height: 50px;
+}
+
+.zip_code input {
+    height: 35px;
+    width: 300px;
+}
+
+.phone {
+    margin-top: 20px;
+    margin-left: 115px;
+    height: 50px;
+}
+
+.phone input {
+    height: 35px;
+    width: 300px;
+}
+
+.area-btn {
+    margin-left: 375px;
+    height: 35px;
+    width: 80px;
+    font-size: 20px;
+    color: white;
+    border: none;
+    background-color: green;
+}

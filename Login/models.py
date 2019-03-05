@@ -3,7 +3,7 @@ from django.db import models
 
 class UserInfo(models.Model):
     num = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=16)
+    name = models.CharField(max_length=16, db_index=True)
     password = models.CharField(max_length=40)
     nickname = models.CharField(max_length=16)
     sex_choice = (('男', 'man'), ('女', 'women'))
@@ -13,7 +13,7 @@ class UserInfo(models.Model):
     email = models.CharField(max_length=32, default='')
     phone = models.CharField(max_length=11, default='')
     receiver = models.CharField(max_length=64, default='')
-
+    code = models.CharField(max_length=6, default='')
     # blog = models.ManyToManyField(to="Address", to_field="name", null=True)
 
 

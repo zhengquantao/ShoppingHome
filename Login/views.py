@@ -6,9 +6,8 @@ import hashlib
 
 def login(request):
     if request.method == "GET":
-        user = request.COOKIES.get('user')
+        user = request.COOKIES.get('user', '')
         return render(request, 'login/login.html', {'user': user})
-
 
     user = request.POST.get('user')
     pwd = request.POST.get('pwd')
@@ -38,6 +37,8 @@ def register(request):
     user = request.POST.get('user')
     pwd = request.POST.get('pwd')
     email = request.POST.get('email')
+
+    """这里加邮箱验证的"""
 
     # 加密存储
     hashs = hashlib.md5(b'123')  # 加密方法
