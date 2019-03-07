@@ -4,4 +4,4 @@ from django.core.cache import cache
 
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'index/index.html')

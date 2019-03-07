@@ -9,7 +9,9 @@
 <body>
 <div class="container">
     <div class="header">
-        <div class="header-left"><span id="header" style="color:#5bc0de;margin-left: 50px">{{ user.name }}</span>  欢迎来到购物世界！</div>
+        <div class="header-left"><span id="header" style="color:#5bc0de;margin-left: 50px">{{ user.name }}</span>
+            欢迎来到购物世界！
+        </div>
         <div class="header-right">
             <a href="">登录</a>
             <span></span>
@@ -38,20 +40,13 @@
 
         </div>
         <div class="content-body">
-            <div class="content-body-left">
-                <div class="menu">用户中心</div>
-                <div class="menu-person"><a href="/person/">个人信息</a></div>
-                <div class="menu-order"><a href="/person/order/">全部订单</a></div>
-                <div class="menu-address"><a href="/person/address/">收货地址</a></div>
-            </div>
-            <div class="content-body-right">
-                <!--模版-->
-                {% block body %}
+            <!--模版-->
+            {% block body %}
 
-                {% endblock %}
-            </div>
+            {% endblock %}
         </div>
     </div>
+</div>
 
 </div>
 <script src="/static/js/jquery-3.3.1.js"></script>
