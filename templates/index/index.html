@@ -45,10 +45,10 @@
         }
 
         .content-body-content-body > div {
-            width: 20%;
+            {#width: 20%;#}
             height: 250px;
             text-align: center;
-            border: 1px solid red;
+            border: 1px solid #eee;
         }
 
     </style>
@@ -322,6 +322,38 @@
                 </div>
             </div>
         </div>
+        {% for message, i in Mylist %}
+            <div class="content-body-content" style="margin-top: 20px;">
+            <div class="col-md-10 col-md-offset-1" style="padding-left:0; padding-right:0;">
+                <div class="content-body-content-header"
+                     style="padding-left: 0;padding-right: 0;height:40px;border-bottom:2px solid green; line-height: 40px;">
+                    <div style="padding-left: 0;padding-right: 0;">
+                        <strong>{{ i.name }}</strong>
+                        <span style="margin-left:20px;width:1px; height:10px;border:1px solid #ccc;"></span>
+                        <a style="padding-left: 15px; text-decoration:none;">鲜忙</a>
+                        <a style="padding-left: 15px; text-decoration:none;">蹄子</a>
+                        <a style="padding-left: 15px; text-decoration:none;">香蕉</a>
+                        <a class="pull-right" href="/list/?id={{ i.name }}">更多信息>></a>
+                    </div>
+                </div>
+                <div class="row content-body-content-body">
+                    {% for desc in message %}
+                    <div class="col-md-3">
+                        <a href="/detail/?id={{ desc.classlist__l_number }}">
+                            <div style="height:80%;">
+                                <img src="{{ desc.classlist__img_url }}"
+                                     style="height:100%;width: 100%;" alt="">
+                            </div>
+                            <p>{{ desc.classlist__name }}</p>
+                            <p>{{ desc.classlist__price }}</p>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
         <div class="content-body-content" style="margin-top: 20px;">
             <div class="col-md-10 col-md-offset-1" style="padding-left:0; padding-right:0;">
                 <div class="content-body-content-header"
@@ -336,56 +368,19 @@
                     </div>
                 </div>
                 <div class="row content-body-content-body">
+                    {% for desc in life_list %}
                     <div>
                         <a href="#">
                             <div style="height:80%;">
-                                <img src="https://img30.360buyimg.com/babel/s260x260_jfs/t25954/134/1930444050/488286/31587d0d/5bbf1fc9N3ced3749.jpg!q90!cc_130x130"
+                                <img src="{{ desc.classlist__img_url }}"
                                      style="height:100%;width: 100%;" alt="">
                             </div>
-                            <p>苹果</p>
-                            <p>500元</p>
+                            <p>{{ desc.classlist__name }}</p>
+                            <p>{{ desc.classlist__price }}</p>
                         </a>
                     </div>
-                    <div>
-                        <a href="#">
-                            <div style="height:80%;">
-                                <img src="https://img30.360buyimg.com/babel/s260x260_jfs/t25954/134/1930444050/488286/31587d0d/5bbf1fc9N3ced3749.jpg!q90!cc_130x130"
-                                     style="height:100%;width: 100%;" alt="">
-                            </div>
-                            <p>苹果</p>
-                            <p>500元</p>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="#">
-                            <div style="height:80%;">
-                                <img src="https://img30.360buyimg.com/babel/s260x260_jfs/t25954/134/1930444050/488286/31587d0d/5bbf1fc9N3ced3749.jpg!q90!cc_130x130"
-                                     style="height:100%;width: 100%;" alt="">
-                            </div>
-                            <p>苹果</p>
-                            <p>500元</p>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="#">
-                            <div style="height:80%;">
-                                <img src="https://img30.360buyimg.com/babel/s260x260_jfs/t25954/134/1930444050/488286/31587d0d/5bbf1fc9N3ced3749.jpg!q90!cc_130x130"
-                                     style="height:100%;width: 100%;" alt="">
-                            </div>
-                            <p>苹果</p>
-                            <p>500元</p>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="#">
-                            <div style="height:80%;">
-                                <img src="https://img30.360buyimg.com/babel/s260x260_jfs/t25954/134/1930444050/488286/31587d0d/5bbf1fc9N3ced3749.jpg!q90!cc_130x130"
-                                     style="height:100%;width: 100%;" alt="">
-                            </div>
-                            <p>苹果</p>
-                            <p>500元</p>
-                        </a>
-                    </div>
+                    {% endfor %}
+
                 </div>
             </div>
         </div>
@@ -403,123 +398,18 @@
                     </div>
                 </div>
                 <div class="row content-body-content-body">
+                    {% for desc in home_list %}
                     <div>
                         <a href="#">
                             <div style="height:80%;">
-                                <img src="https://img30.360buyimg.com/babel/s260x260_jfs/t25954/134/1930444050/488286/31587d0d/5bbf1fc9N3ced3749.jpg!q90!cc_130x130"
-                                     style="height:100%;width: 100%;" alt="">
+                                <img src="{{ desc.classlist__img_url }}"
+                                     style="height:100%;width: 100%;" alt="{{ desc.classlist__name }}">
                             </div>
-                            <p>苹果</p>
-                            <p>500元</p>
+                            <p>{{ desc.classlist__name }}</p>
+                            <p>{{ desc.classlist__price }}</p>
                         </a>
                     </div>
-                    <div>
-                        <a href="#">
-                            <div style="height:80%;">
-                                <img src="https://img30.360buyimg.com/babel/s260x260_jfs/t25954/134/1930444050/488286/31587d0d/5bbf1fc9N3ced3749.jpg!q90!cc_130x130"
-                                     style="height:100%;width: 100%;" alt="">
-                            </div>
-                            <p>苹果</p>
-                            <p>500元</p>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="#">
-                            <div style="height:80%;">
-                                <img src="https://img30.360buyimg.com/babel/s260x260_jfs/t25954/134/1930444050/488286/31587d0d/5bbf1fc9N3ced3749.jpg!q90!cc_130x130"
-                                     style="height:100%;width: 100%;" alt="">
-                            </div>
-                            <p>苹果</p>
-                            <p>500元</p>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="#">
-                            <div style="height:80%;">
-                                <img src="https://img30.360buyimg.com/babel/s260x260_jfs/t25954/134/1930444050/488286/31587d0d/5bbf1fc9N3ced3749.jpg!q90!cc_130x130"
-                                     style="height:100%;width: 100%;" alt="">
-                            </div>
-                            <p>苹果</p>
-                            <p>500元</p>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="#">
-                            <div style="height:80%;">
-                                <img src="https://img30.360buyimg.com/babel/s260x260_jfs/t25954/134/1930444050/488286/31587d0d/5bbf1fc9N3ced3749.jpg!q90!cc_130x130"
-                                     style="height:100%;width: 100%;" alt="">
-                            </div>
-                            <p>苹果</p>
-                            <p>500元</p>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="content-body-content" style="margin-top: 20px;">
-            <div class="col-md-10 col-md-offset-1" style="padding-left:0; padding-right:0;">
-                <div class="content-body-content-header"
-                     style="padding-left: 0;padding-right: 0;height:40px;border-bottom:2px solid green; line-height: 40px;">
-                    <div style="padding-left: 0;padding-right: 0;">
-                        <strong>新鲜水果</strong>
-                        <span style="margin-left:20px;width:1px; height:10px;border:1px solid #ccc;"></span>
-                        <a style="padding-left: 15px; text-decoration:none;">鲜忙</a>
-                        <a style="padding-left: 15px; text-decoration:none;">蹄子</a>
-                        <a style="padding-left: 15px; text-decoration:none;">香蕉</a>
-                        <a class="pull-right">更多信息>></a>
-                    </div>
-                </div>
-                <div class="row content-body-content-body">
-                    <div>
-                        <a href="#">
-                            <div style="height:80%;">
-                                <img src="https://img30.360buyimg.com/babel/s260x260_jfs/t25954/134/1930444050/488286/31587d0d/5bbf1fc9N3ced3749.jpg!q90!cc_130x130"
-                                     style="height:100%;width: 100%;" alt="">
-                            </div>
-                            <p>苹果</p>
-                            <p>500元</p>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="#">
-                            <div style="height:80%;">
-                                <img src="https://img30.360buyimg.com/babel/s260x260_jfs/t25954/134/1930444050/488286/31587d0d/5bbf1fc9N3ced3749.jpg!q90!cc_130x130"
-                                     style="height:100%;width: 100%;" alt="">
-                            </div>
-                            <p>苹果</p>
-                            <p>500元</p>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="#">
-                            <div style="height:80%;">
-                                <img src="https://img30.360buyimg.com/babel/s260x260_jfs/t25954/134/1930444050/488286/31587d0d/5bbf1fc9N3ced3749.jpg!q90!cc_130x130"
-                                     style="height:100%;width: 100%;" alt="">
-                            </div>
-                            <p>苹果</p>
-                            <p>500元</p>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="#">
-                            <div style="height:80%;">
-                                <img src="https://img30.360buyimg.com/babel/s260x260_jfs/t25954/134/1930444050/488286/31587d0d/5bbf1fc9N3ced3749.jpg!q90!cc_130x130"
-                                     style="height:100%;width: 100%;" alt="">
-                            </div>
-                            <p>苹果</p>
-                            <p>500元</p>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="#">
-                            <div style="height:80%;">
-                                <img src="https://img30.360buyimg.com/babel/s260x260_jfs/t25954/134/1930444050/488286/31587d0d/5bbf1fc9N3ced3749.jpg!q90!cc_130x130"
-                                     style="height:100%;width: 100%;" alt="">
-                            </div>
-                            <p>苹果</p>
-                            <p>500元</p>
-                        </a>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

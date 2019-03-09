@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # 用户表
 class UserInfo(models.Model):
     num = models.AutoField(primary_key=True)
@@ -14,7 +15,7 @@ class UserInfo(models.Model):
     phone = models.CharField(max_length=11, default='')
     receiver = models.CharField(max_length=64, default='')
     code = models.CharField(max_length=6, default='')
-    comment = models.ForeignKey(to="Comment", to_field='content', null=True)
+    comment = models.ForeignKey(to="Comment", to_field='id', null=True)
     car = models.ForeignKey(to="Car", to_field='id', null=True)
 
 
@@ -53,12 +54,14 @@ class AllClass(models.Model):
 class ClassList(models.Model):
     l_number = models.CharField(max_length=16, db_index=True, unique=True, default='')
     name = models.CharField(max_length=32, default='')
+    img_url = models.CharField(max_length=200, default='')
     color = models.CharField(max_length=8, default='')
     price = models.DecimalField(max_digits=8, decimal_places=2, default='')
     count = models.IntegerField(default='')
-    comment = models.ForeignKey(to='Comment', unique=True, to_field='content', null=True)
+    comment = models.ForeignKey(to='Comment', to_field='content', null=True)
 
 
 # 评论表
 class Comment(models.Model):
+    id = models.IntegerField(primary_key=True)
     content = models.CharField(max_length=126, unique=True, default='')

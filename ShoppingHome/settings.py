@@ -130,6 +130,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
+# MEDIA_ROOT = '/var/www/xxxx/static' 以后部署的文件夹路径，在Nginx中
 
 
 # 缓存

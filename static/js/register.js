@@ -115,7 +115,7 @@ login_user.hover(function(){
 });
 
 /**
- * page : person
+ * page : person.html
  * */
 
 /*自定义弹框*/
@@ -160,4 +160,30 @@ $('#area-btn').on('click', function () {
         }
     });
 });
+
+/*
+*   page: detail.html
+* */
+
+$('#detail').click(function(){
+    $('.detail-main').show();
+    $('.comment-main').hide();
+    $(this).css({'background-color': 'green'});
+    $('#comment').css({'background-color': ''})
+});
+$('#comment').click(function(){
+    $('.comment-main').show();
+    $('.detail-main').hide();
+    $('#detail').css({'background-color': ''});
+    $(this).css({'background-color': 'red'})
+
+});
+
+/*计算价格*/
+$('#getNumber').change(function(){
+    $('#all_price').empty();
+    var num = Number($('#price').text()) * $('#getNumber').val();
+    $('#all_price').text(num)
+});
+
 
