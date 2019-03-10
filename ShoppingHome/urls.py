@@ -19,6 +19,7 @@ from Index import urls as index
 from Login import urls as login
 from Person import urls as person
 from Detail import urls as detail
+from ShoppingCar import urls as shopping_car
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -26,4 +27,6 @@ urlpatterns = [
     url(r'^detail/', include(detail)),
     url(r'^login/', include(login)),
     url(r'^person/', include(person)),
+    url(r'^shoppingCar/', include(shopping_car))
+
 ]

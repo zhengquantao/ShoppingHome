@@ -65,3 +65,11 @@ class ClassList(models.Model):
 class Comment(models.Model):
     id = models.IntegerField(primary_key=True)
     content = models.CharField(max_length=126, unique=True, default='')
+
+
+# 广告栏
+class Ad(models.Model):
+    id = models.CharField(max_length=16, default='', primary_key=True)
+    name = models.CharField(max_length=16, default='')
+    img_url = models.CharField(max_length=300, default='')
+    classlist = models.OneToOneField(to='ClassList', to_field='l_number', null=True)

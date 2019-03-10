@@ -4,52 +4,127 @@
     <meta charset="UTF-8">
     <title>个人中心</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/static/css/person.css">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="/static/css/person.css">-->
+    <style>
+        .content-header {
+            height: 80px;
+        }
+
+        .content-head > div {
+            height: 80px;
+            text-align: center;
+            line-height: 80px;
+        }
+
+        .dropdown:hover {
+            color: green;
+            cursor: pointer;
+        }
+
+        .block {
+            position: absolute;
+            list-style: none;
+            overflow: hidden;
+            top: -1px;
+            left: 100%;
+            z-index: 1;
+            background-color: white;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .dropdown:hover .block {
+            max-height: 500px;
+            max-width: 400px;
+            display: block;
+        }
+
+        .content-body-content-body {
+            display: flex;
+        }
+
+        .content-body-content-body > div {
+            {#width: 20%;#}
+            height: 250px;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+
+
+    </style>
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <div class="header-left"><span id="header" style="color:#5bc0de;margin-left: 50px">{{ user.name }}</span>
-            欢迎来到购物世界！
-        </div>
-        <div class="header-right">
-            <a href="">登录</a>
-            <span></span>
-            <a href="">注册</a>
-            <span></span>
-            <a href="">用户中心</a>
-            <span></span>
-            <a href="">我的购物车</a>
-            <span></span>
-            <a href="">我的订单</a>
-        </div>
-    </div>
-    <div class="content">
-        <div class="content-header">
-            <div class="content-header-left">
-                <div class="logo"><img src=""></div>
-                <div>
-                    <span></span>
+<div class="container-fluid body" style="padding-left: 0; padding-right: 0;">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                </button>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="">欢迎来到购物世界！</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li role="presentation"><a href="/login/">登录</a><span class="sr-only">(current)</span></li>
+                    <li role="presentation"><a href="/login/register/">注册</a><span class="sr-only">(current)</span></li>
+                    <li role="presentation"><a href="#">用户中心</a><span class="sr-only">(current)</span></li>
+                    <li role="presentation"><a href="#">我的购物车</a><span class="sr-only">(current)</span></li>
+                    <li role="presentation"><a href="#">我的订单</a><span class="sr-only">(current)</span></li>
+                    <li role="presentation"><a id="index__user">{{ users }}</a><span class="sr-only">(current)</span></li>
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false"></a>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="row content-header">
+        <div class="logo col-md-1 col-md-offset-1">天天购物</div>
+        <div class="col-md-5 col-md-offset-2">
+            <form class="form-inline ">
+                <div class="col-xs-9">
+                    <input type="text" style="width:100%;cursor:pointer;" class="form-control">
                 </div>
-                <div class="content-header-mess">用户中心</div>
-            </div>
-            <div class="content-header-right">
-                <input type="text" placeholder="搜索商品">
-                <button>搜索</button>
-            </div>
-
+                <button type="submit" class="btn btn-primary" id="search">搜索</button>
+            </form>
         </div>
-        <div class="content-body">
-            <!--模版-->
-            {% block body %}
-
-            {% endblock %}
+        <div class="col-md-2 col-md-offset-1">
+            <div class="shopping-car">
+                <a href="#">
+                    <span style="color:orangered" class="glyphicon glyphicon-shopping-cart"></span>
+                    <strong>购物车</strong>
+                    <span class="car"> 9 </span>
+                </a>
+            </div>
         </div>
+
     </div>
-</div>
+    <div class="content-body">
+        <div class="content-body-nav  row" style="border-bottom: 2px solid green">
+            <div class="col-md-2 col-md-offset-1"
+                 style="background-color: #2b542c;text-align:center; height:40px;line-height: 40px;font-size: 15px;color:white;">
+                全部商品分类
+            </div>
+            <div style=" height:40px;line-height: 40px;font-size: 15px;color:white;">
+                <a style="margin-left:20px;padding-right:10px;">首页</a>
+                <a style="padding-left:20px;padding-right:10px;border-left:1px solid #ccc; ">手机生鲜</a>
+                <a style="padding-left:20px;border-left:1px solid #ccc;">抽奖</a>
+            </div>
+        </div>
+        <!--母版-->
+        {% block body %}
 
+        {% endblock %}
+    </div>
 </div>
 <script src="/static/js/jquery-3.3.1.js"></script>
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
 <script src="/static/js/register.js"></script>
 </body>
 </html>
