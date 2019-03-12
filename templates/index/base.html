@@ -5,54 +5,7 @@
     <title>个人中心</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
-    <!--<link rel="stylesheet" href="/static/css/person.css">-->
-    <style>
-        .content-header {
-            height: 80px;
-        }
-
-        .content-head > div {
-            height: 80px;
-            text-align: center;
-            line-height: 80px;
-        }
-
-        .dropdown:hover {
-            color: green;
-            cursor: pointer;
-        }
-
-        .block {
-            position: absolute;
-            list-style: none;
-            overflow: hidden;
-            top: -1px;
-            left: 100%;
-            z-index: 1;
-            background-color: white;
-            border-radius: 5px;
-            display: none;
-        }
-
-        .dropdown:hover .block {
-            max-height: 500px;
-            max-width: 400px;
-            display: block;
-        }
-
-        .content-body-content-body {
-            display: flex;
-        }
-
-        .content-body-content-body > div {
-            {#width: 20%;#}
-            height: 250px;
-            text-align: center;
-            border: 1px solid #eee;
-        }
-
-
-    </style>
+    <link rel="stylesheet" href="/static/css/index.css">
 </head>
 <body>
 <div class="container-fluid body" style="padding-left: 0; padding-right: 0;">
@@ -70,16 +23,18 @@
                     <li><a href="">欢迎来到购物世界！</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li role="presentation"><a href="/login/">登录</a><span class="sr-only">(current)</span></li>
-                    <li role="presentation"><a href="/login/register/">注册</a><span class="sr-only">(current)</span></li>
-                    <li role="presentation"><a href="#">用户中心</a><span class="sr-only">(current)</span></li>
+                    <li role="presentation"><a href="/person/?user={{ username }}">用户中心</a><span class="sr-only">(current)</span></li>
                     <li role="presentation"><a href="#">我的购物车</a><span class="sr-only">(current)</span></li>
                     <li role="presentation"><a href="#">我的订单</a><span class="sr-only">(current)</span></li>
-                    <li role="presentation"><a id="index__user">{{ users }}</a><span class="sr-only">(current)</span></li>
-                    <li class="dropdown">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false"></a>
-                    </li>
+                    {% if username %}
+                        <li role="presentation"><a id="index__user">{{ username }}</a><span class="sr-only">(current)</span></li>
+                        <li class="dropdown">
+                            <a href="/login/logout/?user={{ username }}">退出</a>
+                        </li>
+                    {% else %}
+                         <li role="presentation"><a href="/login/">登录</a><span class="sr-only">(current)</span></li>
+                        <li role="presentation"><a href="/login/register/">注册</a><span class="sr-only">(current)</span></li>
+                    {% endif %}
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -96,10 +51,10 @@
         </div>
         <div class="col-md-2 col-md-offset-1">
             <div class="shopping-car">
-                <a href="#">
+                <a href="/shoppingCar/carShow/?user={{ username }}">
                     <span style="color:orangered" class="glyphicon glyphicon-shopping-cart"></span>
                     <strong>购物车</strong>
-                    <span class="car"> 9 </span>
+                    <span class="car" id="car_number">{{ count }}</span>
                 </a>
             </div>
         </div>

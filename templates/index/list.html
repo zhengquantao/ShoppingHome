@@ -1,7 +1,7 @@
 {% extends 'index/base.html' %}
     {% block body %}
         <div class="col-md-offset-1" style="height:40px;line-height: 40px; padding-left: 0;padding-right: 0;">
-            <a href="/">全部分类</a> >>  <a>{{ name }}</a>
+            <a href="/?user={{ username }}">全部分类</a> >>  <a>{{ name }}</a>
         </div>
         <div class="col-md-10 col-md-offset-1 row" style="padding-left: 0; padding-right: 0;">
             <div class="col-md-2" style="height:600px;   padding-left:0;padding-right: 0;">
@@ -33,7 +33,7 @@
                 <div class="list-content-right-body">
                     {% for goods in goodsList %}
                     <div class="col-md-2" style="height:250px;text-align: center; padding-right: 0;padding-left: 0;border: 1px solid #eee;">
-                        <a href="/detail/?id={{ goods.classlist__l_number }}">
+                        <a href="/detail/?id={{ goods.classlist__l_number }}&user={{ username }}" id="detail_list">
                         <div style="height:80%;">
                             <img src="{{ goods.classlist__img_url }}" style="width: 100%;height:100%;">
                         </div>

@@ -1,0 +1,42 @@
+.content-header {
+    height: 80px;
+}
+
+.content-head > div {
+    height: 80px;
+    text-align: center;
+    line-height: 80px;
+}
+
+.dropdown:hover {
+    color: green;
+    cursor: pointer;
+}
+
+.block {
+    position: absolute;
+    list-style: none;
+    overflow: hidden;
+    top: -1px;
+    left: 100%;
+    z-index: 1;
+    background-color: white;
+    border-radius: 5px;
+    display: none;
+}
+
+.dropdown:hover .block {
+    max-height: 500px;
+    max-width: 400px;
+    display: block;
+}
+
+.content-body-content-body {
+    display: flex;
+}
+
+.content-body-content-body > div {
+    height: 250px;
+    text-align: center;
+    border: 1px solid #eee;
+}

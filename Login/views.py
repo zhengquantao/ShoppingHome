@@ -20,14 +20,14 @@ def login(request):
 
     count = UserInfo.objects.filter(name=user, password=hash_pwd).count()
     if count:
-        request.session['user'] = user
+        request.session[user] = user
     # 是否记住密码
     if check:
-        request.COOKIES['user'] = user
+        request.COOKIES[user] = user
     else:
         request.COOKIES.clear()
 
-    return JsonResponse({"code": count})
+    return JsonResponse({"code": count, 'user': user})
 
 
 def register(request):
@@ -55,4 +55,16 @@ def register_exit(request):
     user = request.GET.get('user')
     count = UserInfo.objects.filter(name=user).count()
     return JsonResponse({'count': count})
+
+
+def logout(request):
+    path = request.path
+    print(path)
+    user = request.GET.get('user')
+    # print(request.session.pop('user'))
+    if user:
+        ret = request.session.pop(user)
+        print(ret)
+        return redirect('/login/')
+    return redirect('/')
 

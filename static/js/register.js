@@ -1,4 +1,4 @@
-/*
+/**
 * page : register.html
  *  */
 var user = $('#user');
@@ -84,7 +84,7 @@ btn.on('click', function () {
     }
 });
 
-/*
+/**
 *   page : login.html
 * */
 
@@ -110,7 +110,8 @@ login_btn.click(function () {
             },
             function (data) {
                 if (data.code == 1) {
-                    location.href = "/person/";
+                    location.href = '/?user='+data.user;
+                    $.get('/', {'user':data.user})
                 } else {
                     login_user_error.text('用户名或者密码错误');
                     login_pwd_error.text('用户名或者密码错误');
@@ -124,6 +125,8 @@ login_pwd.hover(function () {
 login_user.hover(function () {
     login_user_error.empty()
 });
+
+
 
 /**
  * page : person.html
@@ -174,7 +177,22 @@ $('#area-btn').on('click', function () {
     });
 });
 
-/*
+
+/***
+ * page : index.html
+ */
+
+// $('.list_name').click(function () {
+//     console.log($(this).siblings('.strong').text())
+//     $.get('/list/', {'id': $(this).siblings('.strong').text(), 'user':$('#index__user').text()||null})
+// })
+
+
+
+
+
+
+/**
 *   page: detail.html
 * */
 
@@ -247,12 +265,19 @@ $('#add_car_btn').click(function () {
         })
 
     } else {
-        $.get('/shoppingCar/', {'user': $('#index__user').text(), 'id': $('#l_number').text() }, function (data) {
-            if (data.code == 1) {
-                //console.log(123456)
+        $.get('/shoppingCar/', {'user': $('#index__user').text(), 'id': $('#l_number').text() }, function(data){console.log("GET");if (data.code == 1) {
+                //$('#car_number').empty();
+                $('#car_number').text(data.count)
             }
         })
     }
-})
+});
+
+
+/**
+ * page :car.html
+ * */
+
+
 
 

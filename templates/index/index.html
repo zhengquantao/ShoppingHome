@@ -213,18 +213,18 @@
                 <div class="content-body-content-header"
                      style="padding-left: 0;padding-right: 0;height:40px;border-bottom:2px solid green; line-height: 40px;">
                     <div style="padding-left: 0;padding-right: 0;">
-                        <strong>{{ i.name }}</strong>
+                        <strong class="strong">{{ i.name }}</strong>
                         <span style="margin-left:20px;width:1px; height:10px;border:1px solid #ccc;"></span>
                         <a style="padding-left: 15px; text-decoration:none;">鲜忙</a>
                         <a style="padding-left: 15px; text-decoration:none;">蹄子</a>
                         <a style="padding-left: 15px; text-decoration:none;">香蕉</a>
-                        <a class="pull-right" href="/list/?id={{ i.name }}">更多信息>></a>
+                        <a class="pull-right list_name"  href="/list/?id={{ i.name }}&user={{ username }}" >更多信息>></a>
                     </div>
                 </div>
                 <div class="row content-body-content-body">
                     {% for desc in message %}
                         <div class="col-md-3">
-                            <a href="/detail/?id={{ desc.classlist__l_number }}">
+                            <a href="/detail/?id={{ desc.classlist__l_number }}&user={{ username }}">
                                 <div style="height:80%;">
                                     <img src="{{ desc.classlist__img_url }}"
                                          style="height:100%;width: 100%;" alt="">

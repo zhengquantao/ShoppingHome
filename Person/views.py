@@ -1,24 +1,29 @@
 from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
 from Login.models import UserInfo
+from global_tools.login_decorate import login
 
-
+@login
 def person(request):
-    return render(request, 'person/person.html')
+    user = request.GET.get('user')
+    return render(request, 'person/person.html', {"username": user})
 
 
+@login
 def order(request):
     return render(request, 'person/order.html')
 
 
+@login
 def address(request):
     user = request.session.get('user')
     ret_user = UserInfo.objects.filter(name=user).first()
     # print(ret_user.name)
-    return render(request, 'person/address.html', {"user": ret_user})
+    return render(request, 'person/address.html', {"username": ret_user})
 
 
 # 更新收货地址
+@login
 def address_update(request):
     user = request.POST.get('user')
     receiver = request.POST.get('receiver')

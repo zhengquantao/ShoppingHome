@@ -21,14 +21,14 @@ class UserInfo(models.Model):
 
 # 购物车
 class Car(models.Model):
-    id = models.IntegerField(primary_key=True, unique=True)
+    id = models.AutoField(primary_key=True)
     date = models.DateTimeField(auto_now_add=True)
     l_number = models.CharField(max_length=16, db_index=True, default='')
     name = models.CharField(max_length=32, default='')
     color = models.CharField(max_length=8, default='')
     price = models.DecimalField(max_digits=8, decimal_places=2, default='')
     count = models.IntegerField(default='')
-
+    img_url = models.CharField(max_length=200, default='')
 
 # 已支付订单
 class Pay(models.Model):

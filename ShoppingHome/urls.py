@@ -23,10 +23,11 @@ from ShoppingCar import urls as shopping_car
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include(index)),
+
     url(r'^detail/', include(detail)),
     url(r'^login/', include(login)),
     url(r'^person/', include(person)),
-    url(r'^shoppingCar/', include(shopping_car))
+    url(r'^shoppingCar/', include(shopping_car)),
+    url(r'^', include(index)),
 
 ]
