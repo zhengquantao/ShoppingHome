@@ -1,49 +1,61 @@
 {% extends 'index/base.html' %}
-    {% block body %}
-        <div class="col-md-offset-1" style="height:40px;line-height: 40px; padding-left: 0;padding-right: 0;">
-            <a href="/?user={{ username }}">全部分类</a> >>  <a>{{ name }}</a>
-        </div>
-        <div class="col-md-10 col-md-offset-1 row" style="padding-left: 0; padding-right: 0;">
-            <div class="col-md-2" style="height:600px;   padding-left:0;padding-right: 0;">
-                <div style="height:40px;text-align: center;line-height: 40px;background-color: #eee;">热门推荐</div>
-                <div>
-                     <div style="height:250px; text-align: center; border: 1px solid #eee;">
-                        <div style="height:80%;">
-                            <img src="https://image2.suning.cn/uimg/cms/img/155185839073039633.jpg" style="width: 100%;height:100%;">
-                        </div>
-                        <div>
-                            <p>三星S10</p>
-                            <p>6666.00</p>
-                        </div>
+{% block body %}
+    <div class="col-md-offset-1" style="height:40px;line-height: 40px; padding-left: 0;padding-right: 0;">
+        <a href="/?user={{ username }}">全部分类</a> >> <a>{{ name }}</a>
+    </div>
+    <div class="col-md-10 col-md-offset-1 row" style="padding-left: 0; padding-right: 0;">
+        <div class="col-md-2" style="height:600px;   padding-left:0;padding-right: 0;">
+            <div style="height:40px;text-align: center;line-height: 40px;background-color: #eee;">热门推荐</div>
+            <div>
+                <div style="height:250px; text-align: center; border: 1px solid #eee;">
+                    <div style="height:80%;">
+                        <img src="https://image2.suning.cn/uimg/cms/img/155185839073039633.jpg"
+                             style="width: 100%;height:100%;">
+                    </div>
+                    <div>
+                        <p>三星S10</p>
+                        <p>6666.00</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-10" style="height:600px;border:1px solid #ddd;  padding-right: 0">
-                <div class="list-content-right-header" style="height:40px;line-height: 40px;padding-right: 0; display: flex;">
-                    <div style="width:45px; text-align: center; font-size: 15px;">
-                         <a >默认</a>
-                    </div>
-                   <div style="width:45px; text-align: center; font-size: 15px;">
-                        <a>价格</a>
-                   </div>
-                   <div style="width:45px; text-align: center; font-size: 15px;">
-                       <a>人气</a>
-                   </div>
+        </div>
+        <div class="col-md-10" style="height:600px;border:1px solid #ddd;  padding-right: 0">
+            <div class="list-content-right-header"
+                 style="height:40px;line-height: 40px;padding-right: 0; display: flex;">
+                <div style="width:45px; text-align: center; font-size: 15px;">
+                    <a>默认</a>
                 </div>
-                <div class="list-content-right-body">
-                    {% for goods in goodsList %}
-                    <div class="col-md-2" style="height:250px;text-align: center; padding-right: 0;padding-left: 0;border: 1px solid #eee;">
+                <div style="width:45px; text-align: center; font-size: 15px;">
+                    <a>价格</a>
+                </div>
+                <div style="width:45px; text-align: center; font-size: 15px;">
+                    <a>人气</a>
+                </div>
+            </div>
+            <div class="list-content-right-body">
+                {% for goods in goodsList %}
+                    <div class="col-md-2"
+                         style="height:250px;text-align: center; padding-right: 0;padding-left: 0;border: 1px solid #eee;">
                         <a href="/detail/?id={{ goods.classlist__l_number }}&user={{ username }}" id="detail_list">
-                        <div style="height:80%;">
-                            <img src="{{ goods.classlist__img_url }}" style="width: 100%;height:100%;">
-                        </div>
+                            <div style="height:80%;">
+                                <img src="{{ goods.classlist__img_url }}" style="width: 100%;height:100%;">
+                            </div>
                             <p>{{ goods.classlist__name }}</p>
                             <p>{{ goods.classlist__price }}</p>
                         </a>
                     </div>
-                    {% endfor %}
+                {% endfor %}
 
-                </div>
             </div>
         </div>
+        <div class="col-md-offset-5">
+        <nav aria-label="Page navigation center">
+            <ul class="pagination">
+                {{ page_html|safe }}
+            </ul>
+
+        </nav>
+        </div>
+    </div>
+
 {% endblock %}

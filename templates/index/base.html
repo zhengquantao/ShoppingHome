@@ -20,11 +20,11 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="">欢迎来到购物世界！</a></li>
+                    <li><a href="/?user={{ username }}">欢迎来到购物世界！</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li role="presentation"><a href="/person/?user={{ username }}">用户中心</a><span class="sr-only">(current)</span></li>
-                    <li role="presentation"><a href="#">我的购物车</a><span class="sr-only">(current)</span></li>
+                    <li role="presentation"><a href="/shoppingCar/carShow/?user={{ username }}">我的购物车</a><span class="sr-only">(current)</span></li>
                     <li role="presentation"><a href="#">我的订单</a><span class="sr-only">(current)</span></li>
                     {% if username %}
                         <li role="presentation"><a id="index__user">{{ username }}</a><span class="sr-only">(current)</span></li>
@@ -54,7 +54,11 @@
                 <a href="/shoppingCar/carShow/?user={{ username }}">
                     <span style="color:orangered" class="glyphicon glyphicon-shopping-cart"></span>
                     <strong>购物车</strong>
-                    <span class="car" id="car_number">{{ count }}</span>
+                    {% if count %}
+                        <span class="car" id="car_number">{{ count }}</span>
+                    {% else %}
+                        <span class="car" id="car_number"></span>
+                    {% endif %}
                 </a>
             </div>
         </div>

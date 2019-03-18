@@ -4,7 +4,7 @@ from django.db import models
 # 用户表
 class UserInfo(models.Model):
     num = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=16, db_index=True)
+    name = models.CharField(max_length=16, unique=True, db_index=True)
     password = models.CharField(max_length=40)
     nickname = models.CharField(max_length=16)
     sex_choice = (('男', 'man'), ('女', 'women'))
@@ -16,19 +16,21 @@ class UserInfo(models.Model):
     receiver = models.CharField(max_length=64, default='')
     code = models.CharField(max_length=6, default='')
     comment = models.ForeignKey(to="Comment", to_field='id', null=True)
-    car = models.ForeignKey(to="Car", to_field='id', null=True)
+    # car = models.ForeignKey(to="Car", to_field='id', null=True)
 
 
 # 购物车
 class Car(models.Model):
-    id = models.AutoField(primary_key=True)
-    date = models.DateTimeField(auto_now_add=True)
-    l_number = models.CharField(max_length=16, db_index=True, default='')
-    name = models.CharField(max_length=32, default='')
-    color = models.CharField(max_length=8, default='')
-    price = models.DecimalField(max_digits=8, decimal_places=2, default='')
-    count = models.IntegerField(default='')
-    img_url = models.CharField(max_length=200, default='')
+    # id = models.AutoField(primary_key=True)
+    # date = models.DateTimeField(auto_now_add=True)
+    # l_number = models.CharField(max_length=16, db_index=True, default='')
+    # name = models.CharField(max_length=32, default='')
+    # color = models.CharField(max_length=8, default='')
+    # price = models.DecimalField(max_digits=8, decimal_places=2, default='')
+    # img_url = models.CharField(max_length=200, default='')
+    count = models.IntegerField(default='')  # 数量
+    user = models.ForeignKey(to='UserInfo', to_field='name', null=True)
+    class_item = models.ForeignKey(to='ClassList', to_field='l_number', null=True)
 
 # 已支付订单
 class Pay(models.Model):

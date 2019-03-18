@@ -7,9 +7,9 @@ def detail(request):
     user = request.GET.get('user')
     user = request.session.get(user)
     if user:
-        count = UserInfo.objects.filter(name=user).values('car')
+        count = Car.objects.filter(user=user).count()
         if count:
-            count = count[0]['car']
+            count = count
     else:
         user = ''
         count = ''

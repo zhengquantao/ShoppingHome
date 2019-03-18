@@ -20,10 +20,11 @@ from Login import urls as login
 from Person import urls as person
 from Detail import urls as detail
 from ShoppingCar import urls as shopping_car
+from Pay import urls as pay
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-
+    url(r'^pay/', include(pay)),
     url(r'^detail/', include(detail)),
     url(r'^login/', include(login)),
     url(r'^person/', include(person)),

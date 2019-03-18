@@ -1,0 +1,78 @@
+<html>
+<head></head>
+<meta charset="UTF-8">
+<body onunload="pclose()">
+<img src="http://www.pptok.com/wp-content/uploads/2012/08/xunguang-4.jpg" name="img1" onload="blowup()" onmouseout="blowup()"
+onmouseover="reduce()">
+<script>
+    var h=img1.height;
+    var w=img1.width;
+    function blowup(){
+        if(img1.height>=h){
+            img1.height=h-100;
+            img1.width=w-100;
+        }
+    }
+    function reduce(){
+        if(img1.height<h){
+            img1.height=h;
+            img1.width=w;
+        }
+    }
+    function pclose(){
+        alert("欢迎浏览本网页")
+    }
+</script>
+
+
+
+<form name="form">
+    <input name="word" size="18" type="text" value="自学JAVA">
+    <select name="menu"  onchange="Fcolor()">
+        <option value="black">黑色</option>
+        <option value="red">红色</option>
+        <option value="yellow">黄色</option>
+        <option value="green">绿色</option>
+        <option value="purple">紫色</option>
+    </select>
+</form>
+<script>
+    function Fcolor(){
+        var e = window.event;
+        var obj = e.srcElement;
+        form.word.style.color = obj.value;
+    }
+</script>
+<script>
+    var Arraycolor = new Array("olive", "teal", "red", "blue", "navy")
+    var n=0;
+    function turncolors(){
+        if(n==(Arraycolor.length-1)) n=0;
+        n++;
+        document.bgColor = Arraycolor[n]
+    }
+</script>
+<form name="from1">
+    <p>
+        <input type="button" name="submit" value="变换北京" onclick="turncolors()">
+    </p>
+</form>
+<script>
+    function visible( cursor, i){
+        if(i==0){
+            cursor.filters.alpha.opacity=100;
+        } else{
+              cursor.filters.alpha.opacity=50;
+        }
+    }
+</script>
+<table border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td align="center" bgcolor="#CCCCCC">
+            <img src="http://www.pptok.com/wp-content/uploads/2012/08/xunguang-4.jpg" border="0" style="" onmousemove="visible(this, 1)" onmouseout="visible(this, 0)">
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

@@ -178,23 +178,9 @@ $('#area-btn').on('click', function () {
 });
 
 
-/***
- * page : index.html
- */
-
-// $('.list_name').click(function () {
-//     console.log($(this).siblings('.strong').text())
-//     $.get('/list/', {'id': $(this).siblings('.strong').text(), 'user':$('#index__user').text()||null})
-// })
-
-
-
-
-
-
 /**
 *   page: detail.html
-* */
+*/
 
 //放大镜
 
@@ -236,7 +222,7 @@ $('#mask').mousemove(function (e) {
 /*计算价格*/
 $('#getNumber').change(function () {
     $('#all_price').empty();
-    var num = Number($('#price').text()) * $('#getNumber').val();
+    var num = (Number($('#price').text()) * $('#getNumber').val()).toFixed(2);
     $('#all_price').text(num)
 });
 
@@ -265,7 +251,7 @@ $('#add_car_btn').click(function () {
         })
 
     } else {
-        $.get('/shoppingCar/', {'user': $('#index__user').text(), 'id': $('#l_number').text() }, function(data){console.log("GET");if (data.code == 1) {
+        $.get('/shoppingCar/', {'user': $('#index__user').text(), 'id': $('#l_number').text(), 'count': $('#getNumber').val() }, function(data){console.log("GET");if (data.code == 1) {
                 //$('#car_number').empty();
                 $('#car_number').text(data.count)
             }
@@ -274,10 +260,90 @@ $('#add_car_btn').click(function () {
 });
 
 
+
 /**
- * page :car.html
- * */
+ *   page : shoppingCar.html  有bug  要修复的！！！！
+ */
+
+//获取checkbox框的状态
+console.log("=======", $('.checkbox').is(':checked'));
+
+var $items_price = $('td').siblings('.items_price');//小计
 
 
+//点击减号
+$('.reduce_btn').click(function(){
+
+    if(parseInt($(this).next('.num_input').val())==0){
+        console.log(this)
+        $(this).next('.num_input').val(0)
+    }else{
+        var reduce = parseInt($(this).next('.num_input').val())-1;
+        $(this).next('.num_input').val(reduce);//框的变化
+        //小计变化
+         $(this).parent().next('.items_price').text((parseInt($(this).next('.num_input').val()) * parseFloat($(this).parent().prev('.item_price').text())).toFixed(2));
+         al()
+    }
+});
+
+//点击加号
+$('.add_num_btn').click(function(){
+    var add = parseInt($(this).prev('.num_input').val())+1;
+    $(this).prev('.num_input').val(add);
+    //小计变化
+    $(this).parent().next('.items_price').text((parseInt($(this).prev('.num_input').val()) * parseFloat($(this).parent().prev('.item_price').text())).toFixed(2));
+    al()
+});
+
+//手动输入
+$('.num_input').blur(function () {
+    //小计变化
+    $(this).parent().next('.items_price').text((parseInt($(this).val()) * parseFloat($(this).parent().prev('.item_price').text())).toFixed(2));
+    al()
+});
+
+//加载时的总价
+function al(){
+    var all_price = 0;
+    for (var i=0; i<$items_price.length; i++){
+        if($('.checkbox').eq(i).is(':checked')==true){
+            all_price += parseFloat($items_price.eq(i).text());
+        }
+    }
+    $('#all_price').text(all_price);
+}
+al();
+
+
+
+//点击选择框时价格的变动
+$('.checkbox').change(function(){
+    // var all_price = 0;
+    // for (var i=0; i<$items_price.length; i++){
+    //     if($('.checkbox').eq(i).is(':checked')==true){
+    //     all_price += parseInt($items_price.eq(i).text());
+    //     }
+    // }
+    // $('#all_price').text(all_price);
+    al()
+})
+
+
+//点击删除按钮
+$('.car_delete_btn').click(function(){
+    $(this).parent().parent().remove();
+    $.get('/shoppingCar/car_update/', {'id':$(this).next('span').text()},function(data){
+        if(data.code==1){console.log('successful')}
+    })
+})
+
+
+
+//点击购买框  触发的事件
+$('#car_button').click(function () {
+    //$.get('/shopping')
+    //$(this).next('span').text()
+    location.href = '/pay/'
+});
 
 

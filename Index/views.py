@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse
 from Login.models import *
+from global_tools.page import Page
 from django.views.decorators.cache import cache_page
 from django.core.cache import cache
 
@@ -9,9 +10,9 @@ def index(request):
     # print('------', request.user)
     user = request.session.get(user)
     if user:
-        count = UserInfo.objects.filter(name=user).values('car')
+        count = Car.objects.filter(user=user).count()
         if count:
-            count = count[0]['car']
+            count = count
     else:
         user = ''
         count = ''
@@ -24,29 +25,26 @@ def index(request):
         Mylist.append([message, i])
     return render(request, 'index/index.html', {"Mylist": Mylist, 'username': user, 'count': count})
 
-    # phone_list = AllClass.objects.filter(number=10001).values(
-    #     'classlist__name', 'classlist__price', 'classlist__img_url')[0:5]
-    # home_list = AllClass.objects.filter(number=10002).values(
-    #     'classlist__name', 'classlist__price', 'classlist__img_url')[0:5]
-    # life_list = AllClass.objects.filter(number=10003).values(
-    #     'classlist__name', 'classlist__price', 'classlist__img_url')[0:5]
-
-    # return render(request, 'index/index.html', {"title": title, "phone_list": phone_list, "home_list": home_list, "life_list": life_list})
-
 
 def list(request):
-    name = request.GET.get('id')
+    name = request.GET.get('id')  # 商品名
     user = request.GET.get('user')
+    page = request.GET.get('page')  # 页码
+    num = request.GET.get('num')  # 数量
     user = request.session.get(user)
     if user:
-        count = UserInfo.objects.filter(name=user).values('car')
+        count = Car.objects.filter(user=user).count()
         if count:
-            count = count[0]['car']
+            count = count
 
     else:
         count = ''
         user = ''
-    goodsList = AllClass.objects.filter(name=name).values('classlist__name', 'classlist__price', 'classlist__img_url',
-                                                          'classlist__l_number')
-    return render(request, 'index/list.html', {"goodsList": goodsList, "name": name, "username": user, "count": count})
+    all_count = AllClass.objects.filter(name=name).count()
+    # 后端处理的分页 （页码， 总数， url， 一页展示信息数， 页脚显示页码数）
+    page_obj = Page(page, all_count, url_prefix='/list/?id='+name+'&user='+user, per_page=12, max_page=3)
+    goodslist = AllClass.objects.filter(name=name).values('classlist__name', 'classlist__price', 'classlist__img_url',
+                                                          'classlist__l_number')[page_obj.start:page_obj.end]
+    page_html = page_obj.page_html()
+    return render(request, 'index/list.html', {"goodsList": goodslist, "name": name, "username": user, "count": count, 'page_html': page_html})
 
