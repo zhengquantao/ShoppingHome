@@ -32,18 +32,6 @@ class Car(models.Model):
     user = models.ForeignKey(to='UserInfo', to_field='name', null=True)
     class_item = models.ForeignKey(to='ClassList', to_field='l_number', null=True)
 
-# 已支付订单
-class Pay(models.Model):
-    id = models.IntegerField(primary_key=True)
-    date = models.DateTimeField(auto_now_add=True)
-    l_number = models.CharField(max_length=16, db_index=True, default='')
-    name = models.CharField(max_length=32, default='')
-    color = models.CharField(max_length=8, default='')
-    price = models.DecimalField(max_digits=8, decimal_places=2, default='')
-    count = models.IntegerField(default='')
-    su_choice = (('1', '1'), ('0', '0'))
-    success = models.CharField(max_length=10, choices=su_choice)
-
 
 # 商品种类表
 class AllClass(models.Model):
@@ -75,3 +63,12 @@ class Ad(models.Model):
     name = models.CharField(max_length=16, default='')
     img_url = models.CharField(max_length=300, default='')
     classlist = models.OneToOneField(to='ClassList', to_field='l_number', null=True)
+
+
+# 已支付订单
+class Pay(models.Model):
+    p_user = models.ForeignKey(to='UserInfo', to_field='name', null=True)
+    c_item = models.ForeignKey(to='ClassList', to_field='l_number', null=True)
+    count = models.IntegerField(default='')
+    su_choice = (('1', '已支付'), ('0', '未支付'))
+    success = models.CharField(max_length=10, choices=su_choice, default=0)

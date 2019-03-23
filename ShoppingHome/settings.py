@@ -114,13 +114,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -143,4 +143,12 @@ CACHES = {
         'TIMEOUT': 60,
     }
 }
+
+
+# 支付相关配置
+APPID = "2016092300578584"  # 填写自己ID
+NOTIFY_URL = "http://127.0.0.1:8000/pay/update_order/"
+RETURN_URL = "http://127.0.0.1:8000/login/order/"
+PRI_KEY_PATH = "global_tools/keys/private_keys.txt"
+PUB_KEY_PATH = "global_tools/keys/public_keys.txt"
 

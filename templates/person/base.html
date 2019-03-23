@@ -4,59 +4,88 @@
     <meta charset="UTF-8">
     <title>个人中心</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/static/css/person.css">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+{#    <link rel="stylesheet" href="/static/css/person.css">#}
+{#    <link rel="stylesheet" href="/static/css/index.css">#}
 </head>
-<body style="margin: 0">
-<div class="container body">
-    <div class="header">
-        <div class="header-left"> 欢迎来到购物世界！</div>
-        <div class="header-right">
-            <a href="">登录</a>
-            <span></span>
-            <a href="">注册</a>
-            <span></span>
-            <a href="">用户中心</a>
-            <span></span>
-            <a href="">我的购物车</a>
-            <span></span>
-            <a href="">我的订单</a>
-        </div>
-    </div>
-    <div class="content">
-        <div class="content-header">
-            <div class="content-header-left">
-                <a href="/">
-                    <div class="logo"><img src=""></div>
-                </a>
-                <div>
-                    <span></span>
+<body>
+<div class="container-fluid body" style="padding-left: 0; padding-right: 0;">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                </button>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">欢迎来到购物世界！</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li role="presentation"><a href="/person/">用户中心</a><span class="sr-only">(current)</span></li>
+                    <li role="presentation"><a href="/shoppingCar/carShow/">我的购物车</a><span
+                            class="sr-only">(current)</span></li>
+                    <li role="presentation"><a href="/person/order/">我的订单</a><span class="sr-only">(current)</span></li>
+                    {% if username %}
+                        <li role="presentation"><a id="index__user">{{ username }}</a><span
+                                class="sr-only">(current)</span></li>
+                        <li class="dropdown">
+                            <a href="/login/logout/?user={{ username }}">退出</a>
+                        </li>
+                    {% else %}
+                        <li role="presentation"><a href="/login/">登录</a><span class="sr-only">(current)</span></li>
+                        <li role="presentation"><a href="/login/register/">注册</a><span class="sr-only">(current)</span>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="row content-header">
+        <div class="logo col-md-1 col-md-offset-2">开心购物</div>
+        <div class="col-md-5 col-md-offset-2">
+            <form class="form-inline ">
+                <div class="col-xs-9">
+                    <input type="text" style="width:100%;cursor:pointer;" class="form-control">
                 </div>
-                <div class="content-header-mess">用户中心</div>
-            </div>
-            <div class="content-header-right">
-                <input type="text" placeholder="搜索商品">
-                <button>搜索</button>
-            </div>
-
+                <button type="submit" class="btn btn-primary" id="search">搜索</button>
+            </form>
         </div>
-        <div class="content-body">
-            <div class="content-body-left">
-                <div class="menu">用户中心</div>
-                <div class="menu-person"><a href="/person/">个人信息</a></div>
-                <div class="menu-order"><a href="/person/order/">全部订单</a></div>
-                <div class="menu-address"><a href="/person/address/">收货地址</a></div>
+        <div class="col-md-2">
+            <div class="shopping-car">
+                <a href="/shoppingCar/carShow/">
+                    <span style="color:orangered" class="glyphicon glyphicon-shopping-cart"></span>
+                    <strong>购物车</strong>
+                    {% if count %}
+                        <span class="car" id="car_number">{{ count }}</span>
+                    {% else %}
+                        <span class="car" id="car_number"></span>
+                    {% endif %}
+                </a>
             </div>
-            <div class="content-body-right">
-                <!--模版-->
-                {% block body %}
+        </div>
 
-                {% endblock %}
-            </div>
+    </div>
+    <div class="row content-body" style="border-top:1px solid green; margin-top:20px;">
+        <div class="row list-group col-md-3 col-md-offset-1 content-body-left">
+            <div class="list-group-item menu active" style="height:50px;font-size: 25px;text-align: center">用户中心</div>
+            <a href="/person/" class="list-group-item menu-person" style="text-align: center;">个人信息</a>
+            <a href="/person/order/" class="list-group-item menu-order" style="text-align: center;">全部订单</a>
+            <a href="/person/address/" class="list-group-item menu-address" style="text-align: center;">收货地址</a>
+        </div>
+        <div class="content-body-right col-md-offset-4">
+            <!--模版-->
+            {% block person-body %}
+
+
+            {% endblock %}
         </div>
     </div>
-
 </div>
 <script src="/static/js/jquery-3.3.1.js"></script>
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
 <script src="/static/js/register.js"></script>
 </body>
 </html>

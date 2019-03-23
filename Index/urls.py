@@ -3,7 +3,7 @@ from Index import views
 
 urlpatterns = [
     url(r'^list/', views.list),
-    url(r'^', views.index),
+    url(r'^$', views.index),
 
 
 ]

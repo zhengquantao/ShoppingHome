@@ -5,12 +5,15 @@ from global_tools.login_decorate import login
 
 @login
 def person(request):
-    user = request.GET.get('user')
-    return render(request, 'person/person.html', {"username": user})
+    user = request.session.get('user')
+    userinfo = UserInfo.objects.filter(name=user)
+    print(userinfo[0])
+    return render(request, 'person/person.html', {"username": user, 'userinfo': userinfo[0]})
 
 
 @login
 def order(request):
+
     return render(request, 'person/order.html')
 
 
@@ -19,7 +22,7 @@ def address(request):
     user = request.session.get('user')
     ret_user = UserInfo.objects.filter(name=user).first()
     # print(ret_user.name)
-    return render(request, 'person/address.html', {"username": ret_user})
+    return render(request, 'person/address.html', {"user": ret_user, 'username': user})
 
 
 # 更新收货地址

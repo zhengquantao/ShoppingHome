@@ -1,35 +1,35 @@
 {% extends 'person/base.html' %}
-{% block body %}
-    <div class="now-address">
-        <div class="now-address-title">收货地址</div>
-        <div class="now-address-body">
-            <div class="now-address-now">
+{% block person-body %}
+    <div class="now-address clearfix" style="padding-top: 20px;">
+        <div class="now-address-title col-md-12" style="font-size: 30px;"><strong>收货地址</strong></div>
+        <div class="now-address-body col-md-offset-1">
+            <div class="now-address-now" style="font-size: 20px;">
                 当前地址
             </div>
-            <div class="address-detail">{{ user.addr }}</div>
+            <div class="address-detail col-md-10" style="height:80px;background-color: #ddd;border-radius: 4px; font-size: 15px;">{{ user.addr }}</div>
         </div>
     </div>
-    <div class="now-address">
-        <div class="now-address-title">编辑地址</div>
-        <div class="edit-address-body">
-            <form>
+    <div class="now-address " style="padding-top: 20px;">
+        <div class="now-address-title col-md-12" style="font-size: 30px;"><strong>编辑地址</strong></div>
+        <div class="edit-address-body col-md-offset-1">
+            <form class="clearfix">
                 {% csrf_token %}
-                <div class="edit-content">
+                <div class="edit-content col-md-10">
                     <div class="receiver">
-                        收件人:<input type="text" id="receiver" value="{{ user.receiver }}">
+                        收件人:<input  class="form-control"type="text" id="receiver" value="{{ user.receiver }}">
                     </div>
                     <div class="p_address">
-                        详细地址:<textarea id="address">{{ user.addr }}</textarea>
+                        详细地址:<textarea class="form-control" id="address">{{ user.addr }}</textarea>
                     </div>
                     <div class="zip_code">
-                        邮编:<input type="text" id="zip_code" value="{{ user.code }}">
+                        邮编:<input class="form-control" type="text" id="zip_code" oninput="value=value.replace(/[^\d]/g, '')" value="{{ user.code }}">
                     </div>
                     <div class="phone">
-                        手机:<input type="text" id="phone" value="{{ user.phone }}">
+                        手机:<input class="form-control" type="text" id="phone" oninput="value=value.replace(/[^\d]/g, '')" value="{{ user.phone }}">
                     </div>
                 </div>
             </form>
-            <button class="area-btn" id="area-btn">提交</button>
+            <button class="area-btn btn-lg btn-success " style="margin-left: 15px; margin-top: 10px;" id="area-btn">提交</button>
         </div>
     </div>
 {% endblock %}

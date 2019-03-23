@@ -7,7 +7,7 @@ from global_tools.login_decorate import login
 # 购物车增加数据
 @login
 def shopping_car(request):
-    user = request.GET.get('user')
+    user = request.session.get('user')
     lid = request.GET.get('id')
     count = request.GET.get('count', 1)
     if not user or not lid:
@@ -28,9 +28,9 @@ def shopping_car(request):
 # 查看购物车
 @login
 def car_show(request):
-    user = request.GET.get('user')
+    # user = request.GET.get('user') #
     # id = request.GET.get('id')
-    user = request.session.get(user)
+    user = request.session.get('user')
     if user:
         count = Car.objects.filter(user=user).count()
         if count:

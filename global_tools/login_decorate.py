@@ -10,8 +10,7 @@ from functools import wraps
 def login(func):
     @wraps(func)
     def login_fun(request, *args, **kwargs):
-        users = request.GET.get('user')
-        if request.session.get(users):
+        if request.session.get('user'):
             return func(request, *args, **kwargs)
         else:
             red = HttpResponseRedirect('/login/')

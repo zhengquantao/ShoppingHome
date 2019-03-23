@@ -110,8 +110,8 @@ login_btn.click(function () {
             },
             function (data) {
                 if (data.code == 1) {
-                    location.href = '/?user='+data.user;
-                    $.get('/', {'user':data.user})
+                    location.href = '/';
+                    //$.get('/', {'user':data.user})
                 } else {
                     login_user_error.text('用户名或者密码错误');
                     login_pwd_error.text('用户名或者密码错误');
@@ -269,6 +269,9 @@ $('#add_car_btn').click(function () {
 console.log("=======", $('.checkbox').is(':checked'));
 
 var $items_price = $('td').siblings('.items_price');//小计
+var $item_allname = $('td').siblings('.item_small_img').children('.item_name'); //名字
+var $item_allprice = $('td').siblings('.item_price'); //单价
+var $item_allnum = $('td').siblings('.num_item_input').children('.num_input'); //数量
 
 
 //点击减号
@@ -303,14 +306,20 @@ $('.num_input').blur(function () {
 });
 
 //加载时的总价
+//全局的数据
+var item_lists;
 function al(){
     var all_price = 0;
+    var item_list = new Array();//局部的数据
     for (var i=0; i<$items_price.length; i++){
         if($('.checkbox').eq(i).is(':checked')==true){
+            item_list[i] = new Array()
             all_price += parseFloat($items_price.eq(i).text());
+            item_list[i].push([$item_allname.eq(i).text(), $item_allnum.eq(i).val(), $item_allprice.eq(i).text()])
         }
     }
     $('#all_price').text(all_price);
+    item_lists = item_list;
 }
 al();
 
@@ -341,9 +350,8 @@ $('.car_delete_btn').click(function(){
 
 //点击购买框  触发的事件
 $('#car_button').click(function () {
-    //$.get('/shopping')
-    //$(this).next('span').text()
-    location.href = '/pay/'
+    console.log(item_lists);
+    location.href = '/pay/?price='+ $('#all_price').text() +'&item='+item_lists;
 });
 
 

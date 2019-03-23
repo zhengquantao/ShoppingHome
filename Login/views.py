@@ -20,10 +20,10 @@ def login(request):
 
     count = UserInfo.objects.filter(name=user, password=hash_pwd).count()
     if count:
-        request.session[user] = user
+        request.session['user'] = user  #
     # 是否记住密码
     if check:
-        request.COOKIES[user] = user
+        request.COOKIES['user'] = user
     else:
         request.COOKIES.clear()
 
@@ -60,10 +60,11 @@ def register_exit(request):
 def logout(request):
     path = request.path
     print(path)
-    user = request.GET.get('user')
-    # print(request.session.pop('user'))
+    # user = request.GET.get('user')  #
+    print("这个用户", request.session.get('user'))
+    user = request.session.get('user')
     if user:
-        ret = request.session.pop(user)
+        ret = request.session.pop('user')  # user
         print(ret)
         return redirect('/login/')
     return redirect('/')

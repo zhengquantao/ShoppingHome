@@ -4,8 +4,8 @@ from Login.models import *
 
 def detail(request):
     id = request.GET.get('id')
-    user = request.GET.get('user')
-    user = request.session.get(user)
+    # user = request.GET.get('user')  #
+    user = request.session.get('user')
     if user:
         count = Car.objects.filter(user=user).count()
         if count:

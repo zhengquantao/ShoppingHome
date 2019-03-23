@@ -1,4 +1,45 @@
 {% extends 'person/base.html' %}
-{% block body %}
-<div>个人信息</div>
+{% block person-body %}
+    <div class="col-md-10 clearfix">
+        <div class="now-address  clearfix" style="padding-top: 20px;">
+            <div class="now-address-title " style="font-size: 30px;"><strong>个人信息</strong></div>
+            <div class="row" style="background-color: #eee;border-radius: 5px;">
+                <div class="row now-address-body col-md-offset-1" style="height:50px;font-size: 20px;line-height: 50px;">
+                    昵称：{{ userinfo.nickname }}
+                </div>
+                <div class="now-address-body col-md-offset-1" style="height:50px;font-size: 20px;line-height: 50px;">
+                    <div class="col-md-8" style="padding-left: 0px;">地址：{{ userinfo.addr }}</div>
+                    <a href="/person/address/" class="btn btn-success">编辑地址</a>
+                </div>
+                <div class="now-address-body col-md-offset-1" style="height:50px;font-size: 20px;line-height: 50px;">
+                    创建时间：{{ userinfo.settime }}
+                </div>
+                <div class="now-address-body col-md-offset-1" style="height:50px;font-size: 20px;line-height: 50px;">
+                    邮箱：{{ userinfo.email }}
+                </div>
+                <div class="now-address-body col-md-offset-1" style="height:50px;font-size: 20px;line-height: 50px;">
+                    密码：******
+                </div>
+                <form class="now-address-body col-md-offset-1">
+                    <div class="" style="height:50px;font-size: 20px;line-height: 50px;">
+                         更改密码：
+                    </div>
+
+                    <div class="col-xs-8">
+                         <input type="password" class="form-control" placeholder="请输入旧密码">
+                        <span class="" style="color:red">xxx</span>
+                    </div>
+
+                    <div class="col-xs-8">
+                        <input type="password" class="form-control" placeholder="请输入新密码">
+                        <span class="" style="color:red">xxxx</span>
+                    </div>
+                </form>
+                <div class="col-md-offset-1 col-xs-8">
+                        <button class="btn btn-success">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

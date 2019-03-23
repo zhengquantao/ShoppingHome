@@ -6,9 +6,10 @@ from django.core.cache import cache
 
 
 def index(request):
-    user = request.GET.get('user')
+    # user = request.GET.get('user')  #
     # print('------', request.user)
-    user = request.session.get(user)
+    # print(request.session.get('user'))
+    user = request.session.get('user')  #
     if user:
         count = Car.objects.filter(user=user).count()
         if count:
@@ -28,10 +29,10 @@ def index(request):
 
 def list(request):
     name = request.GET.get('id')  # 商品名
-    user = request.GET.get('user')
+    # user = request.GET.get('user')  #
     page = request.GET.get('page')  # 页码
     num = request.GET.get('num')  # 数量
-    user = request.session.get(user)
+    user = request.session.get('user')  #
     if user:
         count = Car.objects.filter(user=user).count()
         if count:
