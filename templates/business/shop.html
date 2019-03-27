@@ -1,0 +1,27 @@
+{% extends 'business/base.html' %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-offset-1 col-md-2 list-group">
+            <a class="list-group-item active"
+               style="height:50px; width:100%;text-align: center; font-size: 20px;color:white;">
+                <strong>店铺中心</strong>
+            </a>
+            <a href="/business/shop/" class="list-group-item" style="height:50px; width:100%;text-align: center; font-size: 20px;">订单情况</a>
+            <div class="list-group-item" id="operation" style="padding:0;line-height: 50px; width:100%;text-align: center; font-size: 20px;">
+                商品操作
+                <div id="operation-menu" style="font-size: 18px;">
+                    <a href="/business/list/" class="list-group-item">查看商品</a>
+                    <a href="/business/add/" class="list-group-item">增加商品</a>
+                    <a href="/business/update/" class="list-group-item">更改商品</a>
+                </div>
+            </div>
+            <a href="/business/ad/" class="list-group-item" style="height:50px; width:100%;text-align: center; font-size: 20px;">广告投入</a>
+        </div>
+        <div class="col-md-8">
+        <!---右边的--->
+            {% block body-right %}
+
+                {% endblock %}
+        </div>
+    </div>
+{% endblock %}

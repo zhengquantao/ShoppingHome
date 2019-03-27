@@ -40,8 +40,29 @@
         </div><!-- /.container-fluid -->
     </nav>
     <div class="row content-header">
-        <div class="logo col-md-1 col-md-offset-1">天天购物</div>
-        <div class="col-md-5 col-md-offset-2">
+        <div class="logo col-md-2 col-md-offset-1 connect_seller"><a style="cursor:pointer"><strong>联系卖家</strong><span class="glyphicon glyphicon-comment"></span><a/>
+        <!--聊天体开始-->
+            <div class="chat-box"
+                 style="position:fixed;z-index:5;left:80px;top:90px;width:300px;height:300px; background-color: #ccc;border: 1px solid black;">
+                <div class="chat_box_header" style="height:25px;background-color: #428bca;">
+                    <span style="color:white; line-height:25px;">联系头</span>
+
+                </div>
+                <div class="chat_box_body">
+                    <div style="height:238px;background-color: white;overflow-y: scroll">
+                        <!--内容体--->
+
+                    </div>
+                    <div style="display: flex">
+                        <span class="glyphicon glyphicon-plus-sign" style="padding-top: 10px;cursor:pointer;"></span>
+                        <input type="text" class="form-control" style="width:75%;">
+                        <button class="btn btn-primary" style="margin-left: 5px;">发送</button>
+                    </div>
+                </div>
+            </div>
+            <!--聊天提结束-->
+        </div>
+        <div class="col-md-5 col-md-offset-1">
             <form class="form-inline ">
                 <div class="col-xs-9">
                     <input type="text" style="width:100%;cursor:pointer;" class="form-control">

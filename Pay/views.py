@@ -3,9 +3,12 @@ from global_tools.pay import AliPay
 import time
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
+from global_tools.login_decorate import login
+from Login.models import Pay, UserInfo, ClassList, Car
 from django.http import JsonResponse
 
 
+# @login
 def aliPay():
     obj = AliPay(
         appid=settings.APPID,
@@ -19,6 +22,7 @@ def aliPay():
 
 
 # 请求中转
+# @login
 def pay(request):
     price = request.GET.get('price')
     user = request.session.get('user')  #
@@ -29,8 +33,9 @@ def pay(request):
 
 def pay_ali(request):
     price = float(request.GET.get('price'))
-    user = request.session.get('user')  #
+    user = request.session.get('user')
     item = request.GET.get('item')
+    request.session['item'] = item  # 把商品信息存到session里
     # return HttpResponse('OK')
 
     alipay = aliPay()  # 调用上面的信息
@@ -41,6 +46,7 @@ def pay_ali(request):
     # 拼接成URL
     query_params = alipay.direct_pay(
         subject=item,  # 商品简单描述
+        # item_message=item,  # 商品信息
         out_trade_no=out_trade_no,  # 商户订单号
         total_amount=price,  # 交易金额（单位: 元 保留两位小数）
     )
@@ -85,6 +91,7 @@ def update_order(request):
     """
     print("成功了哦！")
     if request.method == 'POST':
+        print('enenenen?')
         from urllib.parse import parse_qs
 
         body_srt = request.body.decode('utf-8')
@@ -101,10 +108,34 @@ def update_order(request):
         if status:
             # 修改订单状态
             out_trade_no = post_dict.get('out_trade_no')
-            print(out_trade_no)
+            print('订单状态：', out_trade_no)
             # 2. 根据订单号将数据库中的数据进行更新
 
             return HttpResponse('支付成功')
         else:
             return HttpResponse('支付失败')
+
     return HttpResponse('')
+
+
+# 支付成功进来
+def update_status(request):
+    trade_no = request.GET.get('out_trade_no')  # 订单号
+    print(trade_no)
+    user = request.session.get('user')
+    user_obj = UserInfo.objects.get(name=user)  # 得到对象参数信息
+    items = request.session.get('item')  # 取出商品信息
+    item_list = items.split(',')
+    num = len(item_list)//4
+    for i in range(num):
+        item_id = item_list[i*4+1]
+        item_num = item_list[i*4+2]
+        print(item_id, item_num)
+        item_id_obj = ClassList.objects.get(l_number=item_id)
+        Pay.objects.create(p_user=user_obj, c_item=item_id_obj, count=int(item_num), success=1)
+        try:
+            Car.objects.filter(class_item=item_id).delete()
+        except:
+            pass
+    request.session.pop('item')
+    return redirect('/person/order/')

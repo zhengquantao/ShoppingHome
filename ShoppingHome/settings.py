@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Index.apps.IndexConfig',
     'Login.apps.LoginConfig',
-    'Person.apps.PersonConfig'
+    'Person.apps.PersonConfig',
+    'Business.apps.BusinessConfig',
 ]
 
 MIDDLEWARE = [
@@ -148,7 +149,7 @@ CACHES = {
 # 支付相关配置
 APPID = "2016092300578584"  # 填写自己ID
 NOTIFY_URL = "http://127.0.0.1:8000/pay/update_order/"
-RETURN_URL = "http://127.0.0.1:8000/login/order/"
+RETURN_URL = "http://127.0.0.1:8000/pay/update_status/"
 PRI_KEY_PATH = "global_tools/keys/private_keys.txt"
 PUB_KEY_PATH = "global_tools/keys/public_keys.txt"
 

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/business.css">
+</head>
+<body style="background-color: #eee">
+<div class="container-fluid body" style="padding-left: 0; padding-right: 0;">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                </button>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">欢迎来到购物世界！</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li role="presentation"><a href="">用户中心</a><span class="sr-only">(current)</span></li>
+{#                    <li role="presentation"><a href="/shoppingCar/carShow/">我的购物车</a><span class="sr-only">(current)</span></li>#}
+                    <li role="presentation"><a href="">我的订单</a><span class="sr-only">(current)</span></li>
+                    {% if username %}
+                        <li role="presentation"><a id="index__user">{{ username }}</a><span class="sr-only">(current)</span></li>
+                        <li class="dropdown">
+                            <a href="">退出</a>
+                        </li>
+                    {% else %}
+                         <li role="presentation"><a href="/login/">登录</a><span class="sr-only">(current)</span></li>
+                        <li role="presentation"><a href="/login/register/">注册</a><span class="sr-only">(current)</span></li>
+                    {% endif %}
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="content-body">
+        <!--母版-->
+        {% block body %}
+
+        {% endblock %}
+    </div>
+</div>
+<script src="/static/js/jquery-3.3.1.js"></script>
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+<script src="/static/js/login.js"></script>
+</body>
+</html>

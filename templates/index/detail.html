@@ -1,7 +1,7 @@
 {% extends 'index/base.html' %}
 {% block body %}
         <div class="col-md-offset-1" style="height:40px;line-height: 40px; padding-left: 0;padding-right: 0;">
-            <a href="/?user={{ username }}">全部分类</a> >>  <a>详情</a>
+            <a href="/">全部分类</a> >>  <a>详情</a>
         </div>
         <div class="col-md-10 col-md-offset-1" style="overflow:hidden;height:400px;border:1px solid #eee;">
             <!--放大镜-->
@@ -16,16 +16,17 @@
             <!-->
 
             <div class="col-md-9" style="height:280px;margin-top:18px; border:1px solid green;">
-                <div style="height:50px;line-height: 50px; font-size: 20px;">
-                    {{ detail_list.name }}<span id="l_number" style="display: none">{{ detail_list.l_number }}</span>
+                <div class="item_name" style="height:50px;line-height: 50px; font-size: 20px;">
+                    {{ detail_list.name }}
                 </div>
-                <div style="height:30px; line-height: 30px;">
+                <span id="l_number" style="display: none">{{ detail_list.l_number }}</span>
+                <div class="item_color" style="height:30px; line-height: 30px;">
                     颜色：{{ detail_list.color }}
                 </div>
                 <div style="height:30px; line-height: 30px;">
                     月销量：500+
                 </div>
-                <div style="height:30px; line-height: 30px;">
+                <div class="item_price" style="height:30px; line-height: 30px;">
                     价格：<span id="price">{{ detail_list.price }}</span>
                 </div>
                 <div style="height:40px; line-height: 40px;">
@@ -33,7 +34,7 @@
                         <input type="number" id="getNumber" oninput="value=value.replace(/[^\d]/g,'')"  value="1" style="width:40px;cursor:pointer">
                 </div>
                 <div style="margin-top:20px;height:40px; line-height: 40px;">
-                    总价：<span id="all_price" style="font-size: 20px;">{{ detail_list.price }}</span>
+                    总价：<span id="alls_price" style="font-size: 20px;">{{ detail_list.price }}</span>
                 </div>
                 <div>
                     <button id="buy_btn" class="btn btn-success" style="text-align:center;height:30px;width:150px;font-size:15px; ">立即购买</button>

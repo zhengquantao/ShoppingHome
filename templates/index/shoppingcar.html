@@ -25,7 +25,7 @@
                 <button class="reduce_btn">-</button><input type="text" class="num_input" value="1" oninput="value=value.replace(/[^\d]/g,'')" style="width:30px;"><button class="add_num_btn">+</button>
             </td>
             <td style="line-height: 100px;" class="items_price">{{ item.class_item__price }}</td>
-            <td style="line-height: 100px;"><div class="btn btn-danger car_delete_btn">删除</div><span style="display: none;">{{ item.id }}</span></td>
+            <td style="line-height: 100px;"><div class="btn btn-danger car_delete_btn">删除<div style="display: none" class="item_l_number">{{ item.class_item__l_number }}</div></div><span style="display: none;">{{ item.id }}</span></td>
         </tr>
         {% endfor %}
     </table>

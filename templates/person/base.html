@@ -5,8 +5,16 @@
     <title>个人中心</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
-{#    <link rel="stylesheet" href="/static/css/person.css">#}
-{#    <link rel="stylesheet" href="/static/css/index.css">#}
+    <style>
+        .chat-box {
+            display: none;
+        }
+
+        .connect_seller:hover .chat-box {
+            display: block;
+
+        }
+    </style>
 </head>
 <body>
 <div class="container-fluid body" style="padding-left: 0; padding-right: 0;">
@@ -43,9 +51,35 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
+
     <div class="row content-header">
-        <div class="logo col-md-1 col-md-offset-2">开心购物</div>
-        <div class="col-md-5 col-md-offset-2">
+        <div class="logo col-md-2 col-md-offset-2 connect_seller"><a class=""
+                                                                     style="cursor:pointer"><strong>联系卖家</strong><span
+                class="glyphicon glyphicon-comment"></span><a/>
+            <!--聊天体开始-->
+            <div class="chat-box"
+                 style="position:fixed;z-index:5;left:80px;top:90px;width:300px;height:300px; background-color: #ccc;border: 1px solid black;">
+                <div class="chat_box_header" style="height:25px;background-color: #428bca;">
+                    <span style="color:white; line-height:25px;">联系头</span>
+
+                </div>
+                <div class="chat_box_body">
+                    <div style="height:238px;background-color: white;overflow-y: scroll;">
+                        <div>
+                            聊天体aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                            聊天体aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                        </div>
+                    </div>
+                    <div style="display: flex">
+                        <span class="glyphicon glyphicon-plus-sign" style="padding-top: 10px;cursor:pointer;"></span>
+                        <input type="text" class="form-control" style="width:75%;">
+                        <button class="btn btn-primary" style="margin-left: 5px;">发送</button>
+                    </div>
+                </div>
+            </div>
+            <!--聊天提结束-->
+        </div>
+        <div class="col-md-5 col-md-offset-1">
             <form class="form-inline ">
                 <div class="col-xs-9">
                     <input type="text" style="width:100%;cursor:pointer;" class="form-control">
@@ -69,13 +103,14 @@
 
     </div>
     <div class="row content-body" style="border-top:1px solid green; margin-top:20px;">
-        <div class="row list-group col-md-3 col-md-offset-1 content-body-left">
+        <div class="row list-group col-md-2 col-md-offset-1 content-body-left">
             <div class="list-group-item menu active" style="height:50px;font-size: 25px;text-align: center">用户中心</div>
+            <a href="/shoppingCar/carShow/" class="list-group-item menu-person" style="text-align: center;">购物车</a>
             <a href="/person/" class="list-group-item menu-person" style="text-align: center;">个人信息</a>
             <a href="/person/order/" class="list-group-item menu-order" style="text-align: center;">全部订单</a>
             <a href="/person/address/" class="list-group-item menu-address" style="text-align: center;">收货地址</a>
         </div>
-        <div class="content-body-right col-md-offset-4">
+        <div class="content-body-right col-md-offset-3">
             <!--模版-->
             {% block person-body %}
 

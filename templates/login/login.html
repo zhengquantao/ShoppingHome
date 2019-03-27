@@ -11,14 +11,14 @@
             <div class="line-w">
                 <div class="line">
                     <div class="name-left"><label for="login_user">用户名:</label></div>
-                    <div><input type="text" class="input" value="{{ user }}"name="user" id="login_user"></div>
+                    <div><input type="text" class="input" value="{{ user }}" name="user" id="login_user"></div>
                 </div>
                 <div class="error" id="login_user_error">{{ error }}</div>
             </div>
             <div class="line-w">
                 <div class="line">
                     <div class="name-left"><label for="login_pwd">密码：</label></div>
-                    <div><input type="password" class="input" name="pwd" id="login_pwd"></div>
+                    <div><input type="password" class="input" value="{{ pwd }}" name="pwd" id="login_pwd"></div>
                 </div>
                 <div class="error" id="login_pwd_error"></div>
             </div>

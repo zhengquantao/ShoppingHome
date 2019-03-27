@@ -67,7 +67,6 @@ email.hover(function () {
     e_error.empty()
 });
 
-
 btn.on('click', function () {
     if (user_check == true && pwd_check == true && email_check == true && rpwd_check == true && check_agree[0].checked == true) {
         $.post('/login/register/', {
@@ -110,7 +109,7 @@ login_btn.click(function () {
             },
             function (data) {
                 if (data.code == 1) {
-                    location.href = '/';
+                    location.href = data.path;
                     //$.get('/', {'user':data.user})
                 } else {
                     login_user_error.text('用户名或者密码错误');
@@ -127,9 +126,44 @@ login_user.hover(function () {
 });
 
 
+/***
+ * page: person.html
+ */
+$('.old_pwd').focusin(function(){
+    $('.pwd_error').empty()
+})
+$('.new_pwd').focusin(function(){
+    $('.rpwd_error').empty()
+})
+$('.pwd_btn').click(function(){
+   if($('.old_pwd').val()==""){
+       $('.pwd_error').text('密码不能为空')
+   }
+   if($('.new_pwd').val()==""){
+       $('.rpwd_error').text('密码不能为空')
+   }
+   if($('.old_pwd').val()!="" && $('.new_pwd').val()!=""){
+       $.post('/person/', {"pwd": $('.old_pwd').val(), "rpwd":$('.new_pwd').val(), "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val()},
+           function(data){
+                if(data.status == 1){
+                    alert(data.msg)
+                    $('#btn-sure').click(function(){
+                        $('#body').remove()
+                    })
+                }else{
+                    alert(data.msg)
+                    $('#btn-sure').click(function(){
+                        $('#body').remove()
+                    })
+                }
+       })
+   }
+});
+
+
 
 /**
- * page : person.html
+ * page : address.html
  * */
 
 /*自定义弹框*/
@@ -221,9 +255,9 @@ $('#mask').mousemove(function (e) {
 
 /*计算价格*/
 $('#getNumber').change(function () {
-    $('#all_price').empty();
+    //$('#alls_price').empty();
     var num = (Number($('#price').text()) * $('#getNumber').val()).toFixed(2);
-    $('#all_price').text(num)
+    $('#alls_price').text(num)
 });
 
 
@@ -258,6 +292,11 @@ $('#add_car_btn').click(function () {
         })
     }
 });
+//点击购买按钮
+$('#buy_btn').click(function(){
+    var item_lists = $('.item_name').text() +','+$('#l_number').text()+','+ $('#getNumber').val()+','+$('#price').text();
+    location.href = '/pay/?price='+ $('#alls_price').text() +'&item='+item_lists;
+})
 
 
 
@@ -272,7 +311,7 @@ var $items_price = $('td').siblings('.items_price');//小计
 var $item_allname = $('td').siblings('.item_small_img').children('.item_name'); //名字
 var $item_allprice = $('td').siblings('.item_price'); //单价
 var $item_allnum = $('td').siblings('.num_item_input').children('.num_input'); //数量
-
+var $item_l_num = $('td').siblings().children('.car_delete_btn').children('.item_l_number');
 
 //点击减号
 $('.reduce_btn').click(function(){
@@ -315,10 +354,10 @@ function al(){
         if($('.checkbox').eq(i).is(':checked')==true){
             item_list[i] = new Array()
             all_price += parseFloat($items_price.eq(i).text());
-            item_list[i].push([$item_allname.eq(i).text(), $item_allnum.eq(i).val(), $item_allprice.eq(i).text()])
+            item_list[i].push([$item_allname.eq(i).text(),$item_l_num.eq(i).text(),$item_allnum.eq(i).val(), $item_allprice.eq(i).text()])
         }
     }
-    $('#all_price').text(all_price);
+    $('#all_price').text(all_price.toFixed(2));
     item_lists = item_list;
 }
 al();
@@ -341,8 +380,11 @@ $('.checkbox').change(function(){
 //点击删除按钮
 $('.car_delete_btn').click(function(){
     $(this).parent().parent().remove();
+    al();
     $.get('/shoppingCar/car_update/', {'id':$(this).next('span').text()},function(data){
-        if(data.code==1){console.log('successful')}
+        if(data.code==1){
+            $('#car_number').text(data.count)
+        }
     })
 })
 

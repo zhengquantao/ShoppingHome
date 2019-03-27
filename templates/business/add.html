@@ -1,0 +1,67 @@
+{% extends 'business/shop.html' %}
+{% block body-right %}
+    <div class="panel panel-primary">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Shop</div>
+        <div class="panel-body">
+            <div class="col-md-7">
+                <div style="padding-left:0; font-size: 20px;"><strong>增加商品</strong></div>
+                <div class="col-md-offset-1">
+                    <div class="form-group">
+                        <label for="l_number">商品号码</label>
+                        <input id="l-number" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">商品名称</label>
+                        <input id="name" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="img_url">图片链接</label>
+                        <input id="img_url" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="color">商品颜色</label>
+                        <input id="color" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">商品价格</label>
+                        <input id="price" oninput="value=value.replace(/[^\d]/g,'')" type="number"
+                               class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="count">商品库存</label>
+                        <input id="count" oninput="value=value.replace(/[^\d]/g,'')" type="number"
+                               class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="comment">商品评论</label>
+                        <input id="comment" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="number">种类编号</label>
+                        <input id="number" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="class_name">种类名称</label>
+                        <input id="class_name" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="classlist">关联商品</label>
+                        <input id="classlist" type="text" class="form-control">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <table class="table table-bordered">
+            <tr>
+                <td>xxx</td>
+                <td>eee</td>
+                <td>sss</td>
+            </tr>
+        </table>
+    </div>
+
+{% endblock %}

@@ -37,6 +37,13 @@
                 </div>
                 <div class="error" id="e_error"></div>
             </div>
+            <div class="line-w">
+                <div class="line">
+                    <div class="name-left"><label for="email"></label></div>
+                    <div><input type="text" class="input" style="width:100px;" name="check_message" id="check_message"><button class="check_message_btn" type="button" style="height:38px;cursor:pointer">获取验证码</button></div>
+                </div>
+                <div class="error" id="e_error"></div>
+            </div>
             <div>
                 <div style="font-size: 20px;color:#eee;">
                     <input type="checkbox" name="check" id="check_agree">是否同意
@@ -44,7 +51,7 @@
             </div>
         </form>
         <div>
-            <button class="btn" id="btn">注册</button>
+            <button class="btn" type="button" id="btn" style="cursor:pointer;" >注册</button>
         </div>
     </div>
 {% endblock %}

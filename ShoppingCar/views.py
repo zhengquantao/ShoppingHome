@@ -14,6 +14,7 @@ def shopping_car(request):
         return JsonResponse({"code": "没有这个用户名！"})
     # class_list = ClassList.objects.filter(l_number=lid)[0]
     # print(class_list.l_number)
+    # 获取UserInfo的object
     name = UserInfo.objects.get(name=user)
     id = ClassList.objects.get(l_number=lid)
     Car.objects.create(user=name, count=int(count), class_item=id)
@@ -38,7 +39,7 @@ def car_show(request):
     else:
         user = ''
         count = ''
-    item_list = Car.objects.filter(user=user).values('id', 'class_item__img_url', 'class_item__name', 'class_item__price', 'count')
+    item_list = Car.objects.filter(user=user).values('id', 'class_item__l_number', 'class_item__img_url', 'class_item__name', 'class_item__price', 'count')
 
     return render(request, 'index/shoppingcar.html', {"list": item_list, 'count': count, 'username': user})
 
@@ -46,9 +47,16 @@ def car_show(request):
 # 删除信息
 def car_update(request):
     cid = request.GET.get('id')
+    user = request.session.get('user')
+
     try:
         Car.objects.filter(id=cid).delete()
+        if user:
+            count = Car.objects.filter(user=user).count()
+        else:
+            count = ''
         code = 1
     except:
         code = 0
-    return JsonResponse({'code': code})
+        count = ''
+    return JsonResponse({'code': code, 'count': count})

@@ -21,22 +21,21 @@
                     密码：******
                 </div>
                 <form class="now-address-body col-md-offset-1">
+                    {% csrf_token %}
                     <div class="" style="height:50px;font-size: 20px;line-height: 50px;">
                          更改密码：
                     </div>
-
                     <div class="col-xs-8">
-                         <input type="password" class="form-control" placeholder="请输入旧密码">
-                        <span class="" style="color:red">xxx</span>
+                         <input type="password" class="form-control old_pwd" placeholder="请输入旧密码">
+                        <span class="pwd_error" style="color:red"></span>
                     </div>
-
                     <div class="col-xs-8">
-                        <input type="password" class="form-control" placeholder="请输入新密码">
-                        <span class="" style="color:red">xxxx</span>
+                        <input type="password" class="form-control new_pwd" placeholder="请输入新密码">
+                        <span class="rpwd_error" style="color:red"></span>
                     </div>
                 </form>
                 <div class="col-md-offset-1 col-xs-8">
-                        <button class="btn btn-success">提交</button>
+                        <button class="btn btn-success  pwd_btn">提交</button>
                 </div>
             </div>
         </div>

@@ -20,6 +20,8 @@ from Login import urls as login
 from Person import urls as person
 from Detail import urls as detail
 from ShoppingCar import urls as shopping_car
+from Business import urls as business
+from Express import urls as express
 from Pay import urls as pay
 
 urlpatterns = [
@@ -29,6 +31,8 @@ urlpatterns = [
     url(r'^login/', include(login)),
     url(r'^person/', include(person)),
     url(r'^shoppingCar/', include(shopping_car)),
+    url(r'^business/', include(business)),
+    url(r'^express/', include(express)),
     url(r'^', include(index)),
 
 ]

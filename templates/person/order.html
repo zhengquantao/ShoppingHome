@@ -1,7 +1,42 @@
 {% extends 'person/base.html' %}
 {% block person-body %}
-<div>
-    全部订单00000000000000000000000000000000000000000
-</div>
+    <div style="margin-top: 20px;">
+        <div class="later-header">
+            <div style="font-size: 30px;"><strong>最近浏览</strong></div>
+            <div class="row" style="margin-left: 10px;">
+                {% for item in item_list %}
+                    <div class="col-md-2" style="text-align: center;">
+                        <a href="/detail/?id={{ item.l_number }}">
+                            <div class="thumbnail" style="height:180px;">
+                                <img src="{{ item.img_url }}" style="height:100%;width: 100%;" alt="">
+                            </div>
+                            <p>{{ item.name }}</p>
+                            <p>{{ item.price }}</p>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="order-body">
+            <div style="font-size: 30px;"><strong>我的订单</strong></div>
+            {% for item in pay %}
+            <div class="row col-md-11" style="margin-left:20px;height:150px;border:1px solid white;background-color: #eee;">
+                <div class="col-md-2" style="height:150px;padding-left:15px;">
+                    <img style="height:100%;width:100%;" src="{{ item.c_item.img_url }}">
+                </div>
+                <div class="col-md-8 col-md-offset-1" style="line-height: 40px;">
+                    <div style="height:30px;">名称：{{ item.c_item.name }}</div>
+                    <div style="height:30px">颜色：{{ item.c_item.color }}</div>
+                    <div style="height:30px">价格：{{ item.c_item.price }}</div>
+                    <div style="height:30px">描述：</div>
+                </div>
+                <div class="col-md-1" style="margin-top: 50px;">
+                    <button class="btn btn-default" disabled>已付款</button>
+                    <button class="btn btn-default"><a href="/express/" style="text-decoration:none;">查物流</a></button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 
 {% endblock %}
