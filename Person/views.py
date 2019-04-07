@@ -1,9 +1,10 @@
 from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
-from Login.models import UserInfo, Car, ClassList, Pay
+from Login.models import UserInfo, Car, ClassList, Pay, Ticket
 from global_tools.login_decorate import login
 from global_tools.pwd import hashpwd
 from Pay.views import aliPay
+
 
 @login
 def person(request):
@@ -74,3 +75,9 @@ def address_update(request):
     except:
         return HttpResponse("没有这个用户！")
     return JsonResponse({"code": 1})
+
+
+@login
+def coupon(request):
+    ticket_list = Ticket.objects.filter(user__name=request.session.get('user')).values('tName', 'tPrice', 'tDescribe', 'tDate')
+    return render(request, 'person/coupon.html', {'ticket': ticket_list, 'username': request.session.get('user')})

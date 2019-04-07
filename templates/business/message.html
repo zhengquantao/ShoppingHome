@@ -1,4 +1,21 @@
 {% extends 'business/base.html' %}
 {% block body %}
-    <div>MESSAGE</div>
+    <div class="row ">
+    {% for person in chator %}
+        <div class="col-md-offset-1 col-md-10" style="height:80px;background-color:white;border-radius:5px;border: 1px solid #eee;">
+        <div class="col-md-2 row">
+            <a class="btn" style="text-decoration:none;" >
+                <div class="click_name" style="width:40px;height:40px;line-height:40px;text-align:center;background-color:orangered;border-radius:50%;">{{ person.uid__name }}</div>
+            </a>
+            {% for read in no_rend %}
+                {% if read.uid__name == person.uid__name %}
+                    <div class="no_read">未读消息&nbsp;&nbsp;<span style="color:orangered">{{ read.count }}</span></div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        </div>
+    {% endfor %}
+    </div>
+
 {% endblock %}

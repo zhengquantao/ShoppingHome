@@ -23,13 +23,27 @@
             <div class="list-content-right-header"
                  style="height:40px;line-height: 40px;padding-right: 0; display: flex;">
                 <div style="width:45px; text-align: center; font-size: 15px;">
-                    <a href="/list/?id={{ name }}">默认</a>
+                    <a href="/list/?id={{ name }}" style="text-decoration: none;">默认</a>
                 </div>
-                <div style="width:45px; text-align: center; font-size: 15px;">
-                    <a href="/list/price/?id={{ name }}">价格</a>
+                <div style="width:80px; text-align: center; font-size: 15px;text-decoration: none;">
+                    <a style="text-decoration:none">价格
+                        <a href="/list/price/0?id={{ name }}" style="text-decoration: none;">
+                        <span class="glyphicon glyphicon-arrow-down"></span>
+                        </a>
+                        <a href="/list/price/1?id={{ name }}" style="text-decoration: none;">
+                        <span class="glyphicon glyphicon-arrow-up"></span>
+                        </a>
+                    </a>
                 </div>
-                <div style="width:45px; text-align: center; font-size: 15px;">
-                    <a href="">人气</a>
+                <div style="width:80px; text-align: center; font-size: 15px;">
+                    <a style="text-decoration: none;">人气
+                        <a href="/list/hot/0?id={{ name }}" style="text-decoration: none;">
+                        <span class="glyphicon glyphicon-arrow-down"></span>
+                        </a>
+                        <a href="/list/hot/1?id={{ name }}" style="text-decoration: none;">
+                        <span class="glyphicon glyphicon-arrow-up"></span>
+                        </a>
+                    </a>
                 </div>
             </div>
             <div class="list-content-right-body">
@@ -57,5 +71,4 @@
         </nav>
         </div>
     </div>
-
 {% endblock %}

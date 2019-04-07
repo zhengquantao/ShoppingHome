@@ -22,6 +22,18 @@
                 </div>
                 <div class="error" id="login_pwd_error"></div>
             </div>
+            <div class="line-w">
+                <div class="line">
+                    <div class="name-left"><label for="login_code">验证码：</label></div>
+                    <div style="display: flex;">
+                        <input type="text" style="border-radius:8px;width:100px;height:35px;border: 1px solid #eee;margin-left: 10px;" placeholder="请输入验证码" name="check_code" id="check_code">
+                        <div style="cursor:pointer;width:100px;height:35px;border: 1px solid #eee;margin-left: 10px;">
+                            <img src="{{ img_path }}" id="check_img" style="width:100%;height:100%;">
+                        </div>
+                    </div>
+                </div>
+                <div class="error" id="login_check_code_error"></div>
+            </div>
             <div>
                 <div style="font-size: 20px;color:#eee;">
                     <input type="checkbox" name="check" id="login_choose">记住密码

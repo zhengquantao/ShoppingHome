@@ -49,3 +49,40 @@
     display: block;
 
 }
+/*#i1 {*/
+    /*display: none;*/
+/*}*/
+/*.face:hover #i1{*/
+    /*display: block;*/
+/*}*/
+.face div ul {
+    position: absolute;
+    cursor:pointer;
+    display: flex;
+    flex-wrap: wrap;
+    z-index: 5;
+    box-shadow: 0 0 12px #666;
+}
+.face div ul li{
+    width:20px;
+    height:20px;
+    margin:0 auto;
+    list-style-type: none;
+    cursor:pointer;
+}
+
+.c_face #ci1 ul {
+    position: absolute;
+    cursor:pointer;
+    display: flex;
+    flex-wrap: wrap;
+    z-index: 5;
+    box-shadow: 0 0 12px #666;
+}
+.c_face #ci1 ul li{
+    width:20px;
+    height:20px;
+    margin:0 auto;
+    list-style-type: none;
+    cursor:pointer;
+}

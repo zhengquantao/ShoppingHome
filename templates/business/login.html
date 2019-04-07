@@ -11,8 +11,9 @@
     <div class="header"></div>
     <div class="content">
         <div class="content-right" style="margin: 0 auto">
-            <div class="content-right-header">
-                用户登录
+            <div class="content-right-header" style="overflow:hidden">
+                <div class="user-1" style="width: 170px;">商家登录</div>
+                <div  class="user-2" style="width: 70px;"><a href="/login/" style="text-decoration:none; color:orange;">用户登录</a></div>
             </div>
             <div class="content-right-content">
                  <div>
@@ -20,7 +21,7 @@
                         {% csrf_token %}
                         <div class="line-w">
                             <div class="line">
-                                <div class="name-left"><label for="login_user">用户名:</label></div>
+                                <div class="name-left"><label for="login_user">商家名:</label></div>
                                 <div><input type="text" class="input" placeholder="请输入账号" name="user" id="login_user">
                                 </div>
                             </div>

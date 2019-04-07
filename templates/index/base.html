@@ -1,8 +1,9 @@
+{% load cache %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>个人中心</title>
+    <title>主页</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/index.css">
@@ -23,13 +24,14 @@
                     <li><a href="/">欢迎来到购物世界！</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                     <li role="presentation"><a href="/business/login/">商家中心</a><span class="sr-only">(current)</span></li>
                     <li role="presentation"><a href="/person/">用户中心</a><span class="sr-only">(current)</span></li>
                     <li role="presentation"><a href="/shoppingCar/carShow/">我的购物车</a><span class="sr-only">(current)</span></li>
                     <li role="presentation"><a href="/person/order/">我的订单</a><span class="sr-only">(current)</span></li>
-                    {% if username %}
-                        <li role="presentation"><a id="index__user">{{ username }}</a><span class="sr-only">(current)</span></li>
+                    {% if request.session.user %}
+                        <li role="presentation"><a id="index__user">{{ request.session.user }}</a><span class="sr-only">(current)</span></li>
                         <li class="dropdown">
-                            <a href="/login/logout/?user={{ username }}">退出</a>
+                            <a href="/login/logout/?user={{ request.session.user }}">退出</a>
                         </li>
                     {% else %}
                          <li role="presentation"><a href="/login/">登录</a><span class="sr-only">(current)</span></li>
@@ -40,7 +42,10 @@
         </div><!-- /.container-fluid -->
     </nav>
     <div class="row content-header">
-        <div class="logo col-md-2 col-md-offset-1 connect_seller"><a style="cursor:pointer"><strong>联系卖家</strong><span class="glyphicon glyphicon-comment"></span><a/>
+        <div class="logo col-md-2 col-md-offset-1 connect_seller"><a style="cursor:pointer" onclick="openwin()"><strong>联系卖家</strong>
+            <span class="glyphicon glyphicon-comment" ></span>
+            <span style="color:red">{{ no_read }}</span>
+        </a>
         <!--聊天体开始-->
             <div class="chat-box"
                  style="position:fixed;z-index:5;left:80px;top:90px;width:300px;height:300px; background-color: #ccc;border: 1px solid black;">
@@ -63,9 +68,9 @@
             <!--聊天提结束-->
         </div>
         <div class="col-md-5 col-md-offset-1">
-            <form class="form-inline ">
+            <form class="form-inline " action="/search/">
                 <div class="col-xs-9">
-                    <input type="text" style="width:100%;cursor:pointer;" class="form-control">
+                    <input type="text" style="width:100%;cursor:pointer;" name="search" placeholder="请输入要搜索的商品名称" class="form-control">
                 </div>
                 <button type="submit" class="btn btn-primary" id="search">搜索</button>
             </form>
@@ -86,15 +91,15 @@
 
     </div>
     <div class="content-body">
-        <div class="content-body-nav  row" style="border-bottom: 2px solid green">
+        <div class="content-body-nav  row" style="border-bottom: 2px solid #428bca">
             <div class="col-md-2 col-md-offset-1"
-                 style="background-color: #2b542c;text-align:center; height:40px;line-height: 40px;font-size: 15px;color:white;">
+                 style="background-color: #428bca;text-align:center; height:40px;line-height: 40px;font-size: 15px;color:white;">
                 全部商品分类
             </div>
             <div style=" height:40px;line-height: 40px;font-size: 15px;color:white;">
-                <a style="margin-left:20px;padding-right:10px;">首页</a>
-                <a style="padding-left:20px;padding-right:10px;border-left:1px solid #ccc; ">手机生鲜</a>
-                <a style="padding-left:20px;border-left:1px solid #ccc;">抽奖</a>
+                <a href="/seckill/" style="text-decoration: none;margin-left:20px;padding-right:10px;cursor:pointer;">限时秒杀</a>
+                <a style="text-decoration: none;padding-left:20px;padding-right:10px;border-left:1px solid #ccc; ">手机版</a>
+                <a style="padding-left:20px;border-left:1px solid #ccc;text-decoration: none;" href="/ticket/">优惠劵</a>
             </div>
         </div>
         <!--母版-->
@@ -103,8 +108,12 @@
         {% endblock %}
     </div>
 </div>
+
+{% cache 600 footer %}
 <script src="/static/js/jquery-3.3.1.js"></script>
 <script src="/static/bootstrap/js/bootstrap.min.js"></script>
 <script src="/static/js/register.js"></script>
+{% endcache %}
+
 </body>
 </html>

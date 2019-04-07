@@ -23,6 +23,7 @@ from ShoppingCar import urls as shopping_car
 from Business import urls as business
 from Express import urls as express
 from Pay import urls as pay
+from Chat import urls as chat
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -33,6 +34,7 @@ urlpatterns = [
     url(r'^shoppingCar/', include(shopping_car)),
     url(r'^business/', include(business)),
     url(r'^express/', include(express)),
+    url(r'^chat/', include(chat)),
     url(r'^', include(index)),
 
 ]

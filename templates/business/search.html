@@ -1,0 +1,119 @@
+{% extends 'business/shop.html' %}
+{% block body-right %}
+    <div class="panel panel-primary">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Shop</div>
+        <div class="panel-body">
+            <div class="col-md-7">
+                <div style="padding-left:0; font-size: 20px;"><strong>搜索商品</strong></div>
+                <form action="/business/search/" method="post">
+                    {% csrf_token %}
+                    <div class="col-md-8 col-md-offset-4" style="display: flex">
+                        <input class="form-control" name="search" placeholder="请输入相关商品名信息" type="text"><button class="btn btn-info">搜索</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <table class="table table-bordered">
+            <tr>
+                <td>编号</td>
+                <td>类名</td>
+                <td>品号</td>
+                <td>品名</td>
+                <td>链接</td>
+                <td>颜色</td>
+                <td>价格</td>
+                <td>数量</td>
+                <td>操作</td>
+            </tr>
+            {% for item in all_item %}
+                <tr>
+                    <td>{{ item.number }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.classlist.l_number }}</td>
+                    <td>{{ item.classlist.name }}</td>
+                    <td>{{ item.classlist.img_url }}</td>
+                    <td>{{ item.classlist.color }}</td>
+                    <td>{{ item.classlist.price }}</td>
+                    <td>{{ item.classlist.count }}</td>
+                    <td>
+                        <button class="btn btn-info" data-toggle="modal" data-target="#{{ item.id }}">编辑</button>
+                        <button class="btn btn-danger"><a style="text-decoration:none;"
+                                                          href="/business/delete/?id={{ item.id }}">删除</a></button>
+                    </td>
+                </tr>
+                 <!--模态框开始-->
+                <div class="modal fade " id="{{ item.id }}" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header btn-info">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="exampleModalLabel">更改信息</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/business/update/" method="post">
+                                    {% csrf_token %}
+                                    <div class="form-group" style="display: none">
+                                        <label for="id" class="control-label"></label>
+                                        <input type="text" class="form-control" id="id" name="id"
+                                               value="{{ item.id }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="number" class="control-label">编号：</label>
+                                        <input type="text" class="form-control" id="number" name="number"
+                                               value="{{ item.number }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name" class="control-label">类名：</label>
+                                        <input class="form-control" id="name" name="name" value="{{ item.name }}">
+                                    </div>
+                                    <div class="form-group" hidden>
+                                        <label for="cl_number" class="control-label">品号：</label>
+                                        <input class="form-control" id="cl_number" name="l_number"
+                                               value="{{ item.classlist.l_number }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cname" class="control-label" >品名：</label>
+                                        <input class="form-control" id="cname" name="cname"
+                                               value="{{ item.classlist.name }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="img_url" class="control-label">链接：</label>
+                                        <input class="form-control" id="img_url" name="img_url"
+                                               value="{{ item.classlist.img_url }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="color" class="control-label">颜色：</label>
+                                        <input class="form-control" id="color" name="color"
+                                               value="{{ item.classlist.color }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="price" class="control-label">价格：</label>
+                                        <input class="form-control" oninput="value=value.replace(/[^\d]/g, '')" id="price" name="price"
+                                               value="{{ item.classlist.price }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="count" class="control-label">数量：</label>
+                                        <input class="form-control" oninput="value=value.replace(/[^\d]/g, '')" id="count" name="count"
+                                               value="{{ item.classlist.count }}">
+                                    </div>
+                                    <!--底部按钮-->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                                        <button type="submit" class="btn btn-primary">确认更改</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--模态框结束-->
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

@@ -80,6 +80,7 @@
     width: 300px;
     border: 1px solid #eee;
     margin-left: 10px;
+    border-radius:8px;
 }
 
 .error {
@@ -93,9 +94,12 @@
 .btn {
     margin-top: 20px;
     width: 420px;
-    height: 30px;
+    height: 38px;
     color: white;
     font-size: 15px;
-    background-color: green;
     border: none;
+    border-radius:5px;
+    cursor:pointer;
+    background-color: green;
+
 }

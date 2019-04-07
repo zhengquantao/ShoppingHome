@@ -1,5 +1,5 @@
 /**
-* page : register.html
+ * page : register.html
  *  */
 var user = $('#user');
 var pwd = $('#pwd');
@@ -56,36 +56,102 @@ rpwd.hover(function () {
     rp_error.empty()
 });
 email.blur(function () {
-    if (email.val().length == 0 || email.val().length > 16) {
+    if (/^[\w]{7,10}@[\w]+[.][\w]{2,4}$/.test(email.val())) {
+        email_check = true
+    } else {
         e_error.text('邮箱格式不正确');
         email_check = false;
-    } else {
-        email_check = true
     }
 });
 email.hover(function () {
-    e_error.empty()
+    e_error.empty();
+    $('#cm_error').empty();
 });
-
+//点击注册按钮
 btn.on('click', function () {
-    if (user_check == true && pwd_check == true && email_check == true && rpwd_check == true && check_agree[0].checked == true) {
+    if (user_check == true && pwd_check == true && email_check == true && rpwd_check == true && check_agree[0].checked == true && $('#check_message').val() != '') {
         $.post('/login/register/', {
                 'user': user.val(),
                 'pwd': pwd.val(),
                 'email': email.val(),
+                'check_message': $('#check_message').val(),
                 "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val()
             },
             function (data) {
                 if (data.code) {
-                    location.href = '/login/'
+                    location.href = data.path
+                } else {
+                    $('#cm_error').text('验证码有误')
                 }
             })
     }
 });
+//定时器
+// function sleep(second){
+//     var now = new Date();
+//     var last = now.getTime() + second;
+//     while(true){
+//         now = new Date();
+//         if(now.getTime() > last){
+//             return
+//         }
+//     }
+// }
+
+/**ES7语法*/
+const sleep = (timeout) => new Promise((resolve) => {
+    setTimeout(resolve, timeout);
+});
+
+//点击验证码
+
+$('.check_message_btn').click(function () {
+
+    if (email_check == true) {
+        /**ES7语法*/
+        (async () => {
+            for (var i = 60; i > 0; i--) {
+                await sleep(1000);
+                $('.check_message_btn').text("剩余时间" + i);
+                $('.check_message_btn').attr('disabled', true);
+
+                if (i == 1) {
+                    $('.check_message_btn').text("获取验证码");
+                    $('.check_message_btn').attr('disabled', false);
+                }
+            }
+        })();
+
+        $.get('/login/email/', {"check_message": email.val()}, function (data) {
+            if (data.status) {
+                pass
+            } else {
+                $('#cm_error').text('邮箱有误')
+            }
+        });
+        //for(let i=10; i>0;i--) {
+        //       (function(j){ //闭包
+        //
+        //          setTimeout(function () {
+        //         //sleep(1000)
+        //              console.log(j)
+        //         $('.check_message_btn').text("剩余时间" + j)
+        //              if(i==1){
+        //             $('.check_message_btn').text("获取验证码")
+        //                  return
+        //              }
+        //     }, 0);
+        //      })(i)
+        //
+        // }
+
+    }
+})
+
 
 /**
-*   page : login.html
-* */
+ *   page : login.html
+ * */
 
 var login_user = $('#login_user');
 var login_pwd = $('#login_pwd');
@@ -104,6 +170,7 @@ login_btn.click(function () {
         $.post('/login/', {
                 "user": login_user.val(),
                 "pwd": login_pwd.val(),
+                "check_code": $('#check_code').val(),
                 "check": login_choose[0].checked,
                 "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val()
             },
@@ -111,6 +178,9 @@ login_btn.click(function () {
                 if (data.code == 1) {
                     location.href = data.path;
                     //$.get('/', {'user':data.user})
+                }
+                else if (data.code == 2) {
+                    $('#login_check_code_error').text("验证码错误")
                 } else {
                     login_user_error.text('用户名或者密码错误');
                     login_pwd_error.text('用户名或者密码错误');
@@ -124,42 +194,58 @@ login_pwd.hover(function () {
 login_user.hover(function () {
     login_user_error.empty()
 });
+$('#check_code').hover(function () {
+    $('#login_check_code_error').empty()
+});
+
+//点击验证码图片
+$('#check_img').click(function () {
+    $.get('/login/check_img/', function (data) {
+        // data.path_img += '?';
+        $('#check_img')[0].src += '?';
+        //$('#check_img').attr('src', data.path_img)
+        // console.log(data.path_img)
+    })
+})
 
 
 /***
  * page: person.html
  */
-$('.old_pwd').focusin(function(){
+$('.old_pwd').focusin(function () {
     $('.pwd_error').empty()
 })
-$('.new_pwd').focusin(function(){
+$('.new_pwd').focusin(function () {
     $('.rpwd_error').empty()
 })
-$('.pwd_btn').click(function(){
-   if($('.old_pwd').val()==""){
-       $('.pwd_error').text('密码不能为空')
-   }
-   if($('.new_pwd').val()==""){
-       $('.rpwd_error').text('密码不能为空')
-   }
-   if($('.old_pwd').val()!="" && $('.new_pwd').val()!=""){
-       $.post('/person/', {"pwd": $('.old_pwd').val(), "rpwd":$('.new_pwd').val(), "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val()},
-           function(data){
-                if(data.status == 1){
+$('.pwd_btn').click(function () {
+    if ($('.old_pwd').val() == "") {
+        $('.pwd_error').text('密码不能为空')
+    }
+    if ($('.new_pwd').val() == "") {
+        $('.rpwd_error').text('密码不能为空')
+    }
+    if ($('.old_pwd').val() != "" && $('.new_pwd').val() != "") {
+        $.post('/person/', {
+                "pwd": $('.old_pwd').val(),
+                "rpwd": $('.new_pwd').val(),
+                "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val()
+            },
+            function (data) {
+                if (data.status == 1) {
                     alert(data.msg)
-                    $('#btn-sure').click(function(){
+                    $('#btn-sure').click(function () {
                         $('#body').remove()
                     })
-                }else{
+                } else {
                     alert(data.msg)
-                    $('#btn-sure').click(function(){
+                    $('#btn-sure').click(function () {
                         $('#body').remove()
                     })
                 }
-       })
-   }
+            })
+    }
 });
-
 
 
 /**
@@ -177,7 +263,7 @@ function alert(e) {
         "确认" + "</button><button id='btn-clear' style='height:35px;width:80px;background-color: red; border: none;border-radius: 5px; color:white;margin-left:140px'>" + "取消" +
         "</button></div>" + "</div>" +
         "</div>");
-        //点击模版关闭
+    //点击模版关闭
     $('#mark').click(function () {
         $('#body').remove()
     });
@@ -213,8 +299,8 @@ $('#area-btn').on('click', function () {
 
 
 /**
-*   page: detail.html
-*/
+ *   page: detail.html
+ */
 
 //放大镜
 
@@ -227,9 +313,9 @@ $('#mask').mouseleave(function () {
     $('#big_box').hide();
 });
 $('#mask').mousemove(function (e) {
-    var left = e.clientX - 132; //$('#mask').offset().left - $('#float_box').offset().left - $('#float_box').width()/2;
-    var top = e.clientY - 38;//$('#mask').offset().top - $('#float_box').offset().top - $('#float_box').height()/2; //38;
-    //console.log("========",$('#mask').offset().top);
+    var left = e.clientX - $('#mask').offset().left - $('#float_box').width() / 2;  //132; - $('#float_box').offset().left
+    var top = e.clientY - $('#mask').offset().top - $('#float_box').height() / 2; //38; - $('#float_box').offset().top
+    //console.log('left', left, 'top', top)
     if (left < 0) {
         left = 0
     } else if (left > ($('#mask').width() - $('#float_box').width())) {
@@ -264,14 +350,14 @@ $('#getNumber').change(function () {
 $('#detail').click(function () {
     $('.detail-main').show();
     $('.comment-main').hide();
-    $(this).css({'background-color': 'green'});
+    $(this).css({'background-color': '#5cb85c'});
     $('#comment').css({'background-color': ''})
 });
 $('#comment').click(function () {
     $('.comment-main').show();
     $('.detail-main').hide();
     $('#detail').css({'background-color': ''});
-    $(this).css({'background-color': 'green'})
+    $(this).css({'background-color': '#5cb85c'})
 
 });
 
@@ -285,7 +371,13 @@ $('#add_car_btn').click(function () {
         })
 
     } else {
-        $.get('/shoppingCar/', {'user': $('#index__user').text(), 'id': $('#l_number').text(), 'count': $('#getNumber').val() }, function(data){console.log("GET");if (data.code == 1) {
+        $.get('/shoppingCar/', {
+            'user': $('#index__user').text(),
+            'id': $('#l_number').text(),
+            'count': $('#getNumber').val()
+        }, function (data) {
+            console.log("GET");
+            if (data.code == 1) {
                 //$('#car_number').empty();
                 $('#car_number').text(data.count)
             }
@@ -293,15 +385,102 @@ $('#add_car_btn').click(function () {
     }
 });
 //点击购买按钮
-$('#buy_btn').click(function(){
-    var item_lists = $('.item_name').text() +','+$('#l_number').text()+','+ $('#getNumber').val()+','+$('#price').text();
-    location.href = '/pay/?price='+ $('#alls_price').text() +'&item='+item_lists;
+$('#buy_btn').click(function () {
+    var item_lists = $('.item_name').text() + ',' + $('#l_number').text() + ',' + $('#getNumber').val() + ',' + $('#price').text();
+    location.href = '/pay/?price=' + $('#alls_price').text() + '&item=' + item_lists;
 })
+
+
+//评论
+$('.face').hover(function(){
+    $('#i1').css({'display': 'block'})
+    $('.icon_face').click(function(){
+        let icon = $(this).text()
+        $('#comment_content').append(icon)
+    })
+},function(){
+    $('#i1').css({'display': 'none'});
+});
+
+//子评论
+$('.c_face').hover(function(){
+    $('#ci1').css({'display': 'block'})
+    $('.cicon_face').click(function(){
+        let icon = $(this).text()
+        $('.textareas').append(icon)
+    })
+},function(){
+    $('#ci1').css({'display': 'none'});
+});
+
+
+
+$('#commit_comment').click(function () {
+    if($('#index__user').text() == ""){
+        location.href = '/login/'
+    }else {
+        if ($('#comment_content').val() != '') {
+            $.get('/detail/comment/', {
+                //'user': $('#index__user').text(),
+                'comment': $('#comment_content').val(),
+                'cid': $('#l_number').text(),
+            }, function (data) {
+                $('.comment-main').append(
+                " <div class=\"col-xs-12\" style=\"border:1px solid green; border-radius:5px;background-color:#ccc;\">\n" +
+                "                        <div style=\"font-size: 15px;height:30px;line-height: 30px;\">" + $('#index__user').text() + "</div>\n" +
+                "                        <div style=\"margin-left:30px;\">\n" +
+                "                            <div style=\"background-color:white;border-radius: 2px;\">\n" +
+                $('#comment_content').val() +
+                "                            </div>\n" +
+                "                            <div class=\"pull-right\"><span id=\"uid\" class=\"hidden\">"+ data.uid +"</span><a class=\"question\" style='cursor: pointer'>回复</a></div>\n" +
+                "                        </div>\n" +
+                "                    </div>"
+            );
+                //清空输入框
+                $('#comment_content').empty();
+            })
+
+        }
+    }
+});
+//点击回复
+$('.question').click(function(){
+    if($('#index__user').text() == ""){
+        location.href = '/login/'
+    }else{
+    $(this).parents().siblings('.input-commit').css({'display': 'block'})
+    }
+});
+//点击关闭的地方
+$('.close-btn').click(function(){
+    $(this).parents('.input-commit').css({'display': 'none'});
+});
+//点击确认
+$('.sure-btn').click(function(){
+    if($(this).siblings('.textareas').val() != "") {
+        $.get('/detail/Ccomment/', {
+            'comment': $(this).siblings('.textareas').val(),
+            'uid': $(this).parents().siblings('.pull-right').children('#uid').text()
+        }, function(data){
+
+        });
+        $(this).parents().parents().parents('.children_comment').append("     <div class=\"col-xs-12 children_comment\" style=\"border:1px solid green;margin-bottom: 10px; border-radius:5px;background-color:#ddd;\">\n" +
+            "                        <div class=\"question_name\" style=\"font-size: 15px;height:30px;line-height: 30px;\">"+$('#index__user').text()+"</div>\n" +
+            "                        <div style=\"margin-left:30px;\">\n" +
+            "                            <div style=\"background-color:white;border-radius: 2px;\">\n" +
+                                            $(this).siblings('.textareas').val() +
+            "                            </div>\n" +
+            "                        </div>\n" +
+            "                    </div>\n");
+    }
+    //清空输入框
+    $(this).siblings('.textareas').empty();
+});
 
 
 
 /**
- *   page : shoppingCar.html  有bug  要修复的！！！！
+ *   page : shoppingCar.html
  */
 
 //获取checkbox框的状态
@@ -311,26 +490,26 @@ var $items_price = $('td').siblings('.items_price');//小计
 var $item_allname = $('td').siblings('.item_small_img').children('.item_name'); //名字
 var $item_allprice = $('td').siblings('.item_price'); //单价
 var $item_allnum = $('td').siblings('.num_item_input').children('.num_input'); //数量
-var $item_l_num = $('td').siblings().children('.car_delete_btn').children('.item_l_number');
+var $item_l_num = $('td').siblings().children('.car_delete_btn').children('.item_l_number');  //商品编号
 
 //点击减号
-$('.reduce_btn').click(function(){
+$('.reduce_btn').click(function () {
 
-    if(parseInt($(this).next('.num_input').val())==0){
+    if (parseInt($(this).next('.num_input').val()) == 0) {
         console.log(this)
         $(this).next('.num_input').val(0)
-    }else{
-        var reduce = parseInt($(this).next('.num_input').val())-1;
+    } else {
+        var reduce = parseInt($(this).next('.num_input').val()) - 1;
         $(this).next('.num_input').val(reduce);//框的变化
         //小计变化
-         $(this).parent().next('.items_price').text((parseInt($(this).next('.num_input').val()) * parseFloat($(this).parent().prev('.item_price').text())).toFixed(2));
-         al()
+        $(this).parent().next('.items_price').text((parseInt($(this).next('.num_input').val()) * parseFloat($(this).parent().prev('.item_price').text())).toFixed(2));
+        al()
     }
 });
 
 //点击加号
-$('.add_num_btn').click(function(){
-    var add = parseInt($(this).prev('.num_input').val())+1;
+$('.add_num_btn').click(function () {
+    var add = parseInt($(this).prev('.num_input').val()) + 1;
     $(this).prev('.num_input').val(add);
     //小计变化
     $(this).parent().next('.items_price').text((parseInt($(this).prev('.num_input').val()) * parseFloat($(this).parent().prev('.item_price').text())).toFixed(2));
@@ -347,25 +526,28 @@ $('.num_input').blur(function () {
 //加载时的总价
 //全局的数据
 var item_lists;
-function al(){
+
+function al() {
     var all_price = 0;
     var item_list = new Array();//局部的数据
-    for (var i=0; i<$items_price.length; i++){
-        if($('.checkbox').eq(i).is(':checked')==true){
+    for (var i = 0; i < $items_price.length; i++) {
+        if ($('.checkbox').eq(i).is(':checked') == true) {
             item_list[i] = new Array()
             all_price += parseFloat($items_price.eq(i).text());
-            item_list[i].push([$item_allname.eq(i).text(),$item_l_num.eq(i).text(),$item_allnum.eq(i).val(), $item_allprice.eq(i).text()])
+            item_list[i].push([$item_allname.eq(i).text(), $item_l_num.eq(i).text(), $item_allnum.eq(i).val(), $item_allprice.eq(i).text()])
+        } else {
+            continue
         }
     }
     $('#all_price').text(all_price.toFixed(2));
     item_lists = item_list;
 }
+
 al();
 
 
-
 //点击选择框时价格的变动
-$('.checkbox').change(function(){
+$('.checkbox').change(function () {
     // var all_price = 0;
     // for (var i=0; i<$items_price.length; i++){
     //     if($('.checkbox').eq(i).is(':checked')==true){
@@ -378,22 +560,69 @@ $('.checkbox').change(function(){
 
 
 //点击删除按钮
-$('.car_delete_btn').click(function(){
+$('.car_delete_btn').click(function () {
     $(this).parent().parent().remove();
     al();
-    $.get('/shoppingCar/car_update/', {'id':$(this).next('span').text()},function(data){
-        if(data.code==1){
+    $.get('/shoppingCar/car_update/', {'id': $(this).next('span').text()}, function (data) {
+        if (data.code == 1) {
             $('#car_number').text(data.count)
         }
     })
 })
 
 
-
 //点击购买框  触发的事件
 $('#car_button').click(function () {
-    console.log(item_lists);
-    location.href = '/pay/?price='+ $('#all_price').text() +'&item='+item_lists;
+    for (var i = 0; i < item_lists.length; i++) {
+        if (item_lists[i] == null) {  //如果数组里数据为空，把那个为空的数据删除掉
+            item_lists.splice(i, 1)
+        }
+    }
+    location.href = '/pay/?price=' + $('#all_price').text() + '&item=' + item_lists;
 });
 
 
+/***
+ * page: chat.html
+ */
+//聊天窗口
+function openwin() {
+    window.open("http://127.0.0.1:8000/chat/", "newwin", "height=450,width=500,resizable=no,toolbar=no,top=100, left=150,scrollbars=no,menubar=no,location=no");
+}
+
+
+/***
+ * page: coupon.html
+ */
+$('.ticket').click(function(){
+    if($('#index__user').text() == ""){
+        location.href="/login/"
+    }else{
+        $.get('/ticket/update/', {'id': $(this).children().children('.ticket_id').text()}, function(date){
+            alert(date.msg);
+            //关闭模版
+            $('#btn-sure').click(function(){
+                 $('#body').remove();
+            })
+        })
+    }
+});
+
+/***
+ *  page:pay.html
+ */
+
+let $nums = $('#A-price').text()
+$('.radios').click(function(){
+    if($(this).is(':checked') == true){
+        var num = Number($nums)-Number($(this).siblings('.one-price').text());
+        $('#A-price').text(num);
+        $('#pay_ali').attr('href', '/pay/pay_ali/?price='+num+'&item='+$('#item_message').text()+'&name='+$(this).siblings('.one-name').text())
+        $('#pay_wx').attr('href', '/pay/pay_wx/?price='+num+'&item='+$('#item_message').text()+'&name='+$(this).siblings('.one-name').text())
+        $('#pay_yl').attr('href', '/pay/pay_yl/?price='+num+'&item='+$('#item_message').text()+'&name='+$(this).siblings('.one-name').text())
+    }
+});
+
+
+//href="/pay/pay_wx/?price={{ price }}&item={{ item }}"
+//href="/pay/pay_yl/?price={{ price }}&item={{ item }}"

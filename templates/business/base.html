@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>个人中心</title>
+    <title>主页</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/business.css">
@@ -23,13 +23,16 @@
                     <li><a href="/">欢迎来到购物世界！</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li role="presentation"><a href="">用户中心</a><span class="sr-only">(current)</span></li>
-{#                    <li role="presentation"><a href="/shoppingCar/carShow/">我的购物车</a><span class="sr-only">(current)</span></li>#}
-                    <li role="presentation"><a href="">我的订单</a><span class="sr-only">(current)</span></li>
+                    <li role="presentation"><a href="/business/index/">店铺首页</a><span class="sr-only">(current)</span></li>
+                    <li role="presentation"><a href="/business/message/">消息中心</a><span class="sr-only">(current)</span></li>
+                    <li role="presentation"><a href="/business/shop/">我的订单</a><span class="sr-only">(current)</span></li>
                     {% if username %}
-                        <li role="presentation"><a id="index__user">{{ username }}</a><span class="sr-only">(current)</span></li>
+                        <li role="presentation">
+                            <li><a id="index__user">{{ request.session.user }}</a><span class="sr-only">(current)</span></li>
+                        </li>
                         <li class="dropdown">
-                            <a href="">退出</a>
+                            <a href="/business/logout/">退出</a>
+
                         </li>
                     {% else %}
                          <li role="presentation"><a href="/login/">登录</a><span class="sr-only">(current)</span></li>

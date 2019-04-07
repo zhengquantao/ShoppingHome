@@ -46,31 +46,43 @@
     <div class="col-md-offset-1" style="font-size: 50px;font-weight: normal">
         <strong>请选择支付方式</strong>
     </div>
-    <div class="row col-md-offset-3" style="display: flex;padding-top: 50px; height:600px;">
-        <div class="col-md-2" style="text-align: center">
-            <a href="/pay/pay_ali/?price={{ price }}&item={{ item }}">
+    <div class="col-md-5 col-md-offset-3"><strong>你所需要支付的价格&nbsp;</strong><span id="A-price" style="color:red;font-size: 15px;">{{ price }}</span></div>
+    <span class="hidden" id="item_message">{{ item }}</span>
+    {% if ticket %}
+    <div class="col-md-7 col-md-offset-3">
+        <strong style="font-size:20px;">请选择你想要使用的优惠券</strong>
+        {% for item in ticket %}
+        <div style="padding-left:40px;">
+            <span class="one-name" style="color:orangered">{{ item.tName }}</span>&nbsp;&nbsp;<span class="one-price" style="color:red">{{ item.tPrice }}</span>&nbsp;&nbsp;<input class="radios" type="radio" name="select" style="cursor: pointer">
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="row col-md-8 col-md-offset-3" style="display: flex;padding-top: 50px; height:600px;">
+        <div class="col-md-2" style="text-align: center;height:100px;">
+            <a id="pay_ali" href="/pay/pay_ali/?price={{ price }}&item={{ item }}">
                 <div class="thumbnail">
-                    <img src="http://zhifu.qdlinghu.com/static/picture/zfb.png" alt="支付宝" class="img-rounded">
+                    <img src="/static/images/bank_zfb.gif"  alt="支付宝" class="img-rounded">
                     <div class="caption ">
                         <h3>支付宝</h3>
                     </div>
                 </div>
             </a>
         </div>
-        <div class="col-md-2" style="text-align: center">
-            <a href="/pay/pay_wx/?price={{ price }}&item={{ item }}">
+        <div class="col-md-2" style="text-align: center;height:100px;">
+            <a id="pay_wx" href="/pay/pay_wx/?price={{ price }}&item={{ item }}">
                 <div class="thumbnail">
-                    <img src="http://zhifu.qdlinghu.com/static/picture/wx.png" alt="微信" class="img-rounded">
+                    <img src="/static/images/bank_wx.gif" alt="微信" class="img-rounded">
                     <div class="caption">
                         <h3>微信</h3>
                     </div>
                 </div>
             </a>
         </div>
-        <div class="col-md-2" style="text-align: center">
-            <a href="/pay/pay_yl/?price={{ price }}&item={{ item }}">
+        <div class="col-md-2" style="text-align: center;height:100px;">
+            <a id="pay_yl" href="/pay/pay_yl/?price={{ price }}&item={{ item }}">
                 <div class="thumbnail">
-                    <img src="http://zhifu.qdlinghu.com/static/picture/yl.png" alt="银联" class="img-rounded">
+                    <img src="/static/images/bank_zgyl.gif" alt="银联" class="img-rounded">
                     <div class="caption">
                         <h3>银联</h3>
                     </div>

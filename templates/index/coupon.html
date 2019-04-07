@@ -1,0 +1,17 @@
+{% extends 'index/base.html' %}
+{% block body %}
+<div class="row">
+{% for item in ticket %}
+    <div class="col-md-10 col-md-offset-1 ticket" style="padding:0;border-radius: 10px;border:1px solid #eee;cursor:pointer;">
+        <div class="child" style="background-color: orange;height:80px;border-radius: 10px;">
+            <div class="hidden ticket_id">{{ item.id }}</div>
+            <div class="col-xs-12"><strong>{{ item.tName }}</strong>&nbsp;&nbsp;&nbsp;<strong>{{ item.tDescribe }}</strong></div>
+            <div class="col-xs-offset-5">
+                <div style="font-size: 30px;color:white">{{ item.tPrice }}</div>
+            </div>
+            <div class="pull-right">{{ item.tDate|date:"Y-m-d H:i:s" }}</div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+{% endblock %}

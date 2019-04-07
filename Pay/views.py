@@ -4,7 +4,7 @@ import time
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from global_tools.login_decorate import login
-from Login.models import Pay, UserInfo, ClassList, Car
+from Login.models import Pay, UserInfo, ClassList, Car, Border, Ticket
 from django.http import JsonResponse
 
 
@@ -28,14 +28,18 @@ def pay(request):
     user = request.session.get('user')  #
     item = request.GET.get('item')
     # print(item)
-    return render(request, 'pay/pay.html', {'price': price, 'username': user, 'item': item})
+    ticket = Ticket.objects.filter(user__name=user).values('tName', 'tPrice', 'tDescribe')
+    return render(request, 'pay/pay.html', {'price': price, 'username': user, 'item': item, 'ticket': ticket})
 
 
 def pay_ali(request):
     price = float(request.GET.get('price'))
-    user = request.session.get('user')
+    # user = request.session.get('user')
     item = request.GET.get('item')
+    coupon = request.GET.get('name')
     request.session['item'] = item  # 把商品信息存到session里
+    if coupon:
+        request.session['coupon'] = coupon
     # return HttpResponse('OK')
 
     alipay = aliPay()  # 调用上面的信息
@@ -91,7 +95,6 @@ def update_order(request):
     """
     print("成功了哦！")
     if request.method == 'POST':
-        print('enenenen?')
         from urllib.parse import parse_qs
 
         body_srt = request.body.decode('utf-8')
@@ -123,6 +126,10 @@ def update_status(request):
     trade_no = request.GET.get('out_trade_no')  # 订单号
     print(trade_no)
     user = request.session.get('user')
+    # 删除已使用的优惠劵
+    coupon = request.session.get('coupon')
+    Ticket.objects.filter(user__name=user, tName=coupon).delete()
+
     user_obj = UserInfo.objects.get(name=user)  # 得到对象参数信息
     items = request.session.get('item')  # 取出商品信息
     item_list = items.split(',')
@@ -130,12 +137,18 @@ def update_status(request):
     for i in range(num):
         item_id = item_list[i*4+1]
         item_num = item_list[i*4+2]
-        print(item_id, item_num)
+        # print(item_id, item_num)
         item_id_obj = ClassList.objects.get(l_number=item_id)
-        Pay.objects.create(p_user=user_obj, c_item=item_id_obj, count=int(item_num), success=1)
+        item_id_obj.count -= int(item_num)  # 库存 减掉已卖出的数量
+        item_id_obj.pay_nums += int(item_num)  # 销售量加
+        item_id_obj.save()
+        Pay.objects.create(p_user=user_obj, c_item=item_id_obj, trade_no=trade_no[:16], count=int(item_num), success=1)
         try:
             Car.objects.filter(class_item=item_id).delete()
+            trade_item = Pay.objects.get(trade_no=trade_no[:16])  # 获取pay表的对象
+            Border.objects.create(pay=trade_item, item_no=trade_no[:16])  # 订单数据加入到business表中
         except:
             pass
     request.session.pop('item')
+
     return redirect('/person/order/')

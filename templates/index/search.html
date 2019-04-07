@@ -1,0 +1,21 @@
+{% extends 'index/base.html' %}
+{% block body %}
+    <div class="row">
+    {% for item in list %}
+        <a href="/detail/?id={{ item.l_number }}">
+        <div class="col-md-10 col-md-offset-1" style="padding:0;height:150px;border:1px solid #eee;background-color: #ddd;">
+            <div class="col-md-1" style="padding:0;height:150px;">
+                <img src="{{ item.img_url }}" style="width:100%; height:100%;">
+            </div>
+            <div class="col-md-9" style="height:25px;line-height: 25px;">
+                <p>名称：{{ item.name }}</p>
+                <p>价格：{{ item.price }}</p>
+                <p>颜色：{{ item.color }}</p>
+                <p>浏览量：{{ item.pay_nums }}</p>
+            </div>
+        </div>
+        </a>
+    {% endfor %}
+    </div>
+
+{% endblock %}

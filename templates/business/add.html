@@ -7,61 +7,69 @@
             <div class="col-md-7">
                 <div style="padding-left:0; font-size: 20px;"><strong>增加商品</strong></div>
                 <div class="col-md-offset-1">
+
+                    <form method="post">
+                        {% csrf_token %}
                     <div class="form-group">
                         <label for="l_number">商品号码</label>
-                        <input id="l-number" type="text" class="form-control">
+                        <input id="l_number" type="text" name="l_number" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="name">商品名称</label>
-                        <input id="name" type="text" class="form-control">
+                        <input id="name" type="text" name="cname" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="img_url">图片链接</label>
-                        <input id="img_url" type="text" class="form-control">
+                        <input id="img_url" type="text" name="img_url" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="color">商品颜色</label>
-                        <input id="color" type="text" class="form-control">
+                        <input id="color" type="text" name="color" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="price">商品价格</label>
-                        <input id="price" oninput="value=value.replace(/[^\d]/g,'')" type="number"
+                        <input id="price" name="price" oninput="value=value.replace(/[^\d]/g,'')" type="number"
                                class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="count">商品库存</label>
-                        <input id="count" oninput="value=value.replace(/[^\d]/g,'')" type="number"
+                        <input id="count" name="count" oninput="value=value.replace(/[^\d]/g,'')" type="number"
                                class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="comment">商品评论</label>
                         <input id="comment" type="text" class="form-control">
                     </div>
-                    <div class="form-group">
+
+                    <button class="btn btn-primary">增加</button>
+                    </form>
+                     <hr>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
                         <label for="number">种类编号</label>
-                        <input id="number" type="text" class="form-control">
+                        <input id="number" name="number" type="text" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="class_name">种类名称</label>
-                        <input id="class_name" type="text" class="form-control">
+                        <input id="class_name" name="name" type="text" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="classlist">关联商品</label>
-                        <input id="classlist" type="text" class="form-control">
+                        <select id="classlist"  class="form-control" name="classlist">
+                            {% for item in classlist %}
+                                <option value="{{ item.l_number }}">{{ item.l_number }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
-
+                    <button class="btn btn-primary">增加</button>
+                    </form>
                 </div>
             </div>
         </div>
 
         <!-- Table -->
-        <table class="table table-bordered">
-            <tr>
-                <td>xxx</td>
-                <td>eee</td>
-                <td>sss</td>
-            </tr>
-        </table>
+
     </div>
 
 {% endblock %}

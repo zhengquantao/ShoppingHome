@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'Login.apps.LoginConfig',
     'Person.apps.PersonConfig',
     'Business.apps.BusinessConfig',
+    'Chat.apps.ChatConfig',
 ]
 
 MIDDLEWARE = [
@@ -85,7 +86,8 @@ DATABASES = {
         'PORT': '3306',
         'NAME': 'shopping',
         'USER': 'root',
-        'PASSWORD': '12345678'
+        'PASSWORD': '12345678',
+        'OPTIONS': {'charset': 'utf8mb4'}  # 设置字符集
         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
@@ -135,15 +137,27 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
 # MEDIA_ROOT = '/var/www/xxxx/static' 以后部署的文件夹路径，在Nginx中
 
 
-# 缓存
+# 设置缓存
 CACHES = {
     'default': {
         # 'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',  # 缓存到本地
         'BACKEND': 'redis_cache.cache.RedisCache',
         'LOCATION': 'localhost:6379',
-        'TIMEOUT': 60,
+        # 'TIMEOUT': 60,
     }
 }
+
+# 缓存
+# CACHES = {
+#     'back': {
+#         'BACKEND': 'redis_cache.cache.RedisCache',
+#         'LOCATION': 'localhost:6379',
+#         'OPTIONS': {
+#             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+#             'CONNECTION_POOL_KWARGS': {'max_connections':100}
+#         }
+#     }
+# }
 
 
 # 支付相关配置

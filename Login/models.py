@@ -1,4 +1,5 @@
 from django.db import models
+# from Business.models import Binfo
 
 
 # 用户表
@@ -48,7 +49,16 @@ class ClassList(models.Model):
     color = models.CharField(max_length=8, default='')
     price = models.DecimalField(max_digits=8, decimal_places=2, default='')
     count = models.IntegerField(default='')
+    see_nums = models.IntegerField(default='0')
+    pay_nums = models.IntegerField(default='0')
     comment = models.ForeignKey(to='Comment', to_field='content', null=True)
+
+
+# 统计访问量表
+class VCount(models.Model):
+    classlist = models.ForeignKey(to='ClassList', to_field='l_number', null=True)
+    see_num = models.IntegerField(default='0')
+    pay_num = models.IntegerField(default='0')
 
 
 # 评论表
@@ -70,5 +80,70 @@ class Pay(models.Model):
     p_user = models.ForeignKey(to='UserInfo', to_field='name', null=True)
     c_item = models.ForeignKey(to='ClassList', to_field='l_number', null=True)
     count = models.IntegerField(default='')
+    trade_no = models.CharField(max_length=16, null=True)
     su_choice = (('1', '已支付'), ('0', '未支付'))
     success = models.CharField(max_length=10, choices=su_choice, default=0)
+
+
+# 物流表
+class Logistics(models.Model):
+    pass
+
+
+# 商家订单表
+class Border(models.Model):
+    pay = models.ForeignKey(to='Pay', null=True)
+    logistics = models.ForeignKey(to='Logistics', null=True)
+    bdate = models.DateTimeField(auto_now_add=True)
+    item_no = models.CharField(max_length=16, null=True, default='')
+
+
+# 商家表
+class Binfo(models.Model):
+    name = models.CharField(max_length=16, unique=True)
+    password = models.CharField(max_length=64)
+
+
+# 聊天表
+class Chat(models.Model):
+    bid = models.ForeignKey(to='Binfo', null=True)
+    uid = models.ForeignKey(to='UserInfo', null=True)
+    content = models.CharField(max_length=200, null=True, default='')
+    date = models.DateTimeField(auto_now_add=True)
+    who_choice = (('1', '商家'), ('0', '用户'))  # 商家发的是1 ， 非商家是0
+    who_send = models.CharField(max_length=10, choices=who_choice, default=0)
+    su_choice = (('1', '已读'), ('0', '未读'))
+    sign = models.CharField(max_length=10, choices=su_choice, default=0)
+
+
+# 商品主评论表
+class MComment(models.Model):
+    id = models.AutoField(primary_key=True)
+    cid = models.CharField(max_length=64, unique=True, null=True)
+    uname = models.ForeignKey(to='UserInfo', to_field='name', null=True)
+    number = models.ForeignKey(to='ClassList', to_field='l_number',  null=True)
+    dComment = models.CharField(max_length=1000, null=True)
+    date = models.DateTimeField(auto_now_add=True)
+
+
+# 子评论表
+class CComment(models.Model):
+    cname = models.CharField(max_length=64, unique=True, null=True)
+    cComment = models.CharField(max_length=1000, null=True, default='')
+    date = models.DateTimeField(auto_now_add=True)
+
+
+# 总表
+class AComment(models.Model):
+    uname = models.ForeignKey(to='MComment', null=True)
+    cname = models.ForeignKey(to='CComment', to_field='cname', null=True)
+
+
+# 优惠劵表
+class Ticket(models.Model):
+    tName = models.CharField(max_length=64, null=True, default='')
+    tPrice = models.IntegerField(null=True, default='')
+    tDescribe = models.CharField(max_length=128, null=True, default='')
+    tDate = models.DateTimeField(null=True, default='')
+    tCount = models.IntegerField(null=True, default='')
+    user = models.ForeignKey(to='UserInfo', null=True, blank=True, on_delete=models.SET_NULL)
