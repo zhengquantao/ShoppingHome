@@ -70,9 +70,13 @@ email.hover(function () {
 //点击注册按钮
 btn.on('click', function () {
     if (user_check == true && pwd_check == true && email_check == true && rpwd_check == true && check_agree[0].checked == true && $('#check_message').val() != '') {
+        //密码加盐
+        var salt="1a2b3c4d";
+        var str_r =  ""+salt.charAt(0)+salt.charAt(2)+pwd.val()+salt.charAt(5)+salt.charAt(4);
+        var password_r = md5(str_r);
         $.post('/login/register/', {
                 'user': user.val(),
-                'pwd': pwd.val(),
+                'pwd': password_r,
                 'email': email.val(),
                 'check_message': $('#check_message').val(),
                 "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val()
@@ -163,13 +167,18 @@ var login_choose = $('#login_choose');
 login_btn.click(function () {
     console.log('......', login_choose.is(":checked"));
     console.log('-----', login_choose[0].checked);
+    //加盐
+    var salt="1a2b3c4d";
+    var str =  ""+salt.charAt(0)+salt.charAt(2)+login_pwd.val()+salt.charAt(5)+salt.charAt(4);
+    var password = md5(str);
+
     if (login_user.val().length == 0 || login_pwd.val().length == 0) {
         login_user_error.text('用户名不能为空');
         login_pwd_error.text('密码不能为空');
     } else {
         $.post('/login/', {
                 "user": login_user.val(),
-                "pwd": login_pwd.val(),
+                "pwd": password,
                 "check_code": $('#check_code').val(),
                 "check": login_choose[0].checked,
                 "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val()
@@ -388,7 +397,7 @@ $('#add_car_btn').click(function () {
 $('#buy_btn').click(function () {
     var item_lists = $('.item_name').text() + ',' + $('#l_number').text() + ',' + $('#getNumber').val() + ',' + $('#price').text();
     location.href = '/pay/?price=' + $('#alls_price').text() + '&item=' + item_lists;
-})
+});
 
 
 //评论
@@ -624,5 +633,97 @@ $('.radios').click(function(){
 });
 
 
-//href="/pay/pay_wx/?price={{ price }}&item={{ item }}"
-//href="/pay/pay_yl/?price={{ price }}&item={{ item }}"
+/***
+ * page:seckill.html
+ */
+
+// function countDown(maxtime, n){
+//     var timer = setInterval(function(){
+//         if(maxtime!=0){
+//             maxtime--;
+//             $kill_items.eq(n).text("剩余时间"+maxtime)
+//         }else{
+//             clearInterval(timer)
+//             $kill_items.eq(n).text("开始秒杀");
+//             $kill_items.eq(n).removeClass('kill_items')
+//         }
+//     },1000)
+// }
+
+
+var startTime = $('.startTime');
+var endTime = $('.endTime').text();
+var $kill_items = $('.kill_items');
+var nowTime = (new Date).getTime()/1000;
+//console.log(startTime.length,"===========");
+for(var i=0; i<startTime.length;i++){
+    var residueTime = parseInt(startTime.eq(i).text()-nowTime);
+    //console.log(residueTime, '===========');
+    /**ES7语法*/
+    (async (residueTime, i) => {
+        for (var j=residueTime; j > 0; j--) {
+            //console.log(residueTime, '+++++++++++');
+            //console.log(i, '====');
+            await sleep(1000);
+            residueTime--;
+            $kill_items.eq(i).text("剩余时间"+residueTime);
+        }
+        $kill_items.eq(i).text("开始秒杀");
+        $kill_items.eq(i).removeClass('kill_items', 'disable');
+        $kill_items.eq(i).addClass('start-kill-item')
+    })(residueTime, i);
+    // countDown(residueTime, i);
+};
+$('.start-kill-item').click(function(){
+    alert("正在排队中。。。。");
+    $('#btn-sure').click(function () {
+        $('#body').remove();
+    });
+    // 判断用户是否为空
+    if($('#index__user').text() == ""){
+        location.href="/login/"
+    }else {
+        //不为空发送数据
+        $.post('/seckill/sendkill/', {
+                "id": $(this).siblings('.goods_items__l_number').text(),
+                "trend_path": $(this).siblings('.trend_path_s').text(),
+                "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val()
+            }, function (data) {
+                if (data.path) {
+                    alert(data.msg);
+                    setTimeout(function () {
+                        location.href = data.path;
+                    }, 3000);
+                } else {
+                    alert(data.msg);
+                    //location.href = '/seckill/'
+                }
+            }
+        );
+    }
+});
+
+
+/***
+ * page: goodkill.html
+ */
+//计时器
+(async (pay_time) =>{
+    for(var time=pay_time; time>0;time--){
+        await sleep(1000);
+        time--;
+        $('.pay_time').text(time);
+        if(time == 0){
+            alert("秒杀失败了！！！！！");
+            await sleep(3000);
+            location.href= '/'
+        }
+    }
+
+})($('.pay_time').text());
+
+//秒杀支付
+$('#kill-pay').click(function(){
+    var item_lists = $('.kill_item_name').text() + ',' + $('.kill_item_l_number').text() + ',' + 1 + ',' + $('.kill_price').text();
+    location.href = '/pay/?price=' + $('.kill_price').text() + '&item=' + item_lists;
+});

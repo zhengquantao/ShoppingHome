@@ -24,6 +24,9 @@ from Business import urls as business
 from Express import urls as express
 from Pay import urls as pay
 from Chat import urls as chat
+from Seckill import urls as seckill
+from channels.routing import ProtocolTypeRouter, URLRouter
+from channels.auth import AuthMiddlewareStack
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -35,6 +38,7 @@ urlpatterns = [
     url(r'^business/', include(business)),
     url(r'^express/', include(express)),
     url(r'^chat/', include(chat)),
+    url(r'^seckill/', include(seckill)),
     url(r'^', include(index)),
 
 ]

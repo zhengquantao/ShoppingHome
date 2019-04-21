@@ -1,10 +1,13 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.views.decorators.cache import cache_page
+
 from Login.models import *
 from global_tools.login_decorate import login
 
 
 # 购物车增加数据
+@cache_page(60*1)
 @login
 def shopping_car(request):
     user = request.session.get('user')
@@ -27,6 +30,7 @@ def shopping_car(request):
 
 
 # 查看购物车
+@cache_page(60*1)
 @login
 def car_show(request):
     # user = request.GET.get('user') #
@@ -45,6 +49,7 @@ def car_show(request):
 
 
 # 删除信息
+@cache_page(60*1)
 def car_update(request):
     cid = request.GET.get('id')
     user = request.session.get('user')

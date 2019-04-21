@@ -142,8 +142,18 @@ class AComment(models.Model):
 # 优惠劵表
 class Ticket(models.Model):
     tName = models.CharField(max_length=64, null=True, default='')
-    tPrice = models.IntegerField(null=True, default='')
+    tPrice = models.IntegerField(default='', null=True)
     tDescribe = models.CharField(max_length=128, null=True, default='')
     tDate = models.DateTimeField(null=True, default='')
     tCount = models.IntegerField(null=True, default='')
-    user = models.ForeignKey(to='UserInfo', null=True, blank=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(to='UserInfo', to_field='num', on_delete=models.SET_NULL, null=True)
+
+
+# 秒杀商品
+class SecKill(models.Model):
+    id = models.AutoField(auto_created=True, primary_key=True)
+    # count = models.IntegerField(null=True)
+    startTime = models.DateTimeField(null=True)
+    endTime = models.DateTimeField(null=True)
+    goods = models.ForeignKey(to='ClassList', to_field='l_number')
+

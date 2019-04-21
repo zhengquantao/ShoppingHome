@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from Login.models import Chat, UserInfo, Binfo
 from global_tools.login_decorate import login
+# from dwebsocket.decorators import accept_websocket
 from django.core import serializers
 import json
 import time
@@ -87,3 +88,17 @@ def change(request):
     # one_message = json.dumps(dict_message)  # 将json转成字典
     # print(type(one_message))
     return JsonResponse(dict_message)
+
+
+# websocket
+# @accept_websocket
+# def web_socket(request):
+#     if not request.is_websocket():
+#         return render(request, 'index/websocket.html')
+#     else:
+#         print(request.websocket.wait())
+#         # request.websocket.wait()
+#         request.websocket.send("收到了".encode('utf-8'))
+        # request.websocket.close()
+
+

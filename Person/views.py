@@ -1,5 +1,7 @@
 from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
+from django.views.decorators.cache import cache_page
+
 from Login.models import UserInfo, Car, ClassList, Pay, Ticket
 from global_tools.login_decorate import login
 from global_tools.pwd import hashpwd
@@ -36,6 +38,7 @@ def person(request):
     return JsonResponse(ret)
 
 
+@cache_page(60*1)
 @login
 def order(request):
     item_list = []  # 创建一个保存商品的列表
@@ -53,6 +56,7 @@ def order(request):
     return render(request, 'person/order.html', {'username': user, 'count': count, 'item_list': item_list, 'pay': pay})
 
 
+@cache_page(60*1)
 @login
 def address(request):
     user = request.session.get('user')
@@ -77,6 +81,7 @@ def address_update(request):
     return JsonResponse({"code": 1})
 
 
+@cache_page(60*1)
 @login
 def coupon(request):
     ticket_list = Ticket.objects.filter(user__name=request.session.get('user')).values('tName', 'tPrice', 'tDescribe', 'tDate')

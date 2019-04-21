@@ -1,0 +1,37 @@
+{% extends 'index/base.html' %}
+{% block body %}
+<div class="row">
+{% csrf_token %}
+    {% for item in item_lists_message %}
+<div class="col-md-11 col-md-offset-1" style="height:200px;border:1px solid #eee;">
+    <div class="col-md-2">
+        <img src="{{ item.0.goods__img_url }}" style="height:100%; width:100%;border-radius:5px;">
+    </div>
+    <div class="col-md-8">
+        <div style="line-height:50px;height:50px;font-size:20px;">名称：{{ item.0.goods__name }}</div>
+        <div style="line-height:50px;height:50px;font-size:20px;">秒杀价格：{{ item.0.goods__price }}</div>
+        <div style="line-height:50px;height:50px;font-size:20px;">库存：{{ item.0.goods__count }}</div>
+    </div>
+    {% if item.1 == 1 %}
+        <div style="margin-top:50px;">
+            <div class="startTime hidden">{{ item.2 }}</div>
+            <div class="endTime hidden">{{ item.3 }}</div>
+            <button class="btn btn-danger disabled kill_items">剩余时间</button>
+        </div>
+    {% elif item.1 == 2 %}
+        <div class="" style="margin-top:50px;">
+            <button class="btn btn-danger disabled">结束秒杀</button>
+        </div>
+    {% else %}
+        <div style="margin-top:50px;">
+            <div class="hidden goods_items__l_number">{{ item.0.goods__l_number }}</div>
+            <div class="hidden trend_path_s">{{ trend_path }}</div>
+            <button class="btn btn-danger start-kill-item">开始秒杀</button>
+        </div>
+    {% endif %}
+</div>
+{% endfor %}
+</div>
+
+
+{% endblock %}

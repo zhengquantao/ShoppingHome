@@ -1,0 +1,20 @@
+{% extends 'index/base.html' %}
+{% block body %}
+<div class="row">
+<div class="col-md-11 col-md-offset-1" style="height:200px;border:1px solid #eee;">
+    <div class="col-md-2">
+        <img src="{{ item_message.goods__img_url }}" style="height:100%; width:100%;border-radius:5px;">
+    </div>
+    <div class="col-md-8">
+        <div style="line-height:50px;height:50px;font-size:20px;">名称：<a class="kill_item_name" style="text-decoration: none;">{{ item_message.goods__name }}</a></div>
+        <div style="line-height:50px;height:50px;font-size:20px;">秒杀价格：<a class="kill_price" style="text-decoration: none;">{{ item_message.goods__price }}</a></div>
+        <div style="line-height:50px;height:50px;color:red;font-size:20px;" >剩余支付时间：<a style="text-decoration: none;" class="pay_time">{{ time_out }}</a></div>
+    </div>
+
+    <div style="margin-top:50px;">
+        <div class="hidden kill_item_l_number">{{ item_message.goods__l_number }}</div>
+        <button class="btn btn-primary " id="kill-pay">立即支付</button>
+    </div>
+</div>
+</div>
+{% endblock %}

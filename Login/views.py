@@ -89,6 +89,7 @@ def register(request):
     user = request.POST.get('user')
     pwd = request.POST.get('pwd')
     email = request.POST.get('email')
+    # print(pwd)
     check_message = request.POST.get('check_message')
 
     """这里加邮箱验证的"""

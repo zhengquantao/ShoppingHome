@@ -2,6 +2,9 @@ from django.test import TestCase
 from django.core.cache import cache
 # redisTest
 import redis
+# import uuid
+
+# print(uuid.uuid4())
 
 # 数据过大 会爆栈
 pool = redis.ConnectionPool(host='localhost', port=6379, max_connections=1000)

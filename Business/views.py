@@ -1,5 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.http import JsonResponse
+from django.views.decorators.cache import cache_page
+
 from global_tools.pwd import hashpwd
 # from Business.models import Binfo
 from django.db.models import Count, Sum
@@ -20,6 +22,7 @@ def decorate(func):
     return inner
 
 
+@cache_page(60*1)
 def login(request):
     if request.method == "GET":
         return render(request, 'business/login.html')
@@ -41,17 +44,20 @@ def login(request):
     return JsonResponse({"code": count, 'username': user, 'path': '/business/index/'})
 
 
+@cache_page(60*1)
 def logout(request):
     request.session.pop('user')  #
     return redirect('/business/login/')
 
 
+@cache_page(60*1)
 @decorate
 def index(request):
     user = request.session.get('user')  #
     return render(request, 'business/index.html', {'username': user})
 
 
+@cache_page(60*1)
 @decorate
 def shop(request):
     user = request.session.get('user')  #
@@ -59,6 +65,7 @@ def shop(request):
     return render(request, 'business/order.html', {'username': user, 'order_list': order_list})
 
 
+@cache_page(60*1)
 @decorate
 def message(request):
     user = request.session.get('user')  #
@@ -68,6 +75,7 @@ def message(request):
     return render(request, 'business/message.html', {'username': user, 'chator': chator, 'no_rend': no_rend})
 
 
+@cache_page(60*1)
 @decorate
 def list(request):
     user = request.session.get('user')  #
@@ -107,6 +115,7 @@ def add(request):
     return render(request, 'business/add.html', {'username': user, 'classlist': lists})
 
 
+@cache_page(60*1)
 @decorate
 def update(request):
     user = request.session.get('user')  #
@@ -154,6 +163,7 @@ def active(request):
     return HttpResponse("活动尚未开放")
 
 
+@cache_page(60*1)
 @decorate
 def ad(request):
     user = request.session.get('user')  #

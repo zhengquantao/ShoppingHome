@@ -9,7 +9,7 @@ from django.core.cache import cache
 # cache.set('name', 'password', 300)
 # name = cache.get('name')
 
-# @cache_page(60*10)
+@cache_page(60*10)
 def index(request):
     # user = request.GET.get('user')  #
     # print('------', request.user)
@@ -32,6 +32,7 @@ def index(request):
     return render(request, 'index/index.html', {"Mylist": Mylist, 'username': user, 'count': count, 'no_read': no_read})
 
 
+@cache_page(60*10)
 def list(request):
     name = request.GET.get('id')  # 商品名
     # user = request.GET.get('user')  #
@@ -122,6 +123,3 @@ def ticket_update(request):
         ret['msg'] = "领取失败"
     return JsonResponse(ret)
 
-
-def seckill(request):
-    return HttpResponse("活动尚未开放")

@@ -20,6 +20,7 @@ def img():
     height = 60  # 高
     image = Image.new("RGB", (width, height), (255, 255, 255))
     font = ImageFont.truetype("arial.ttf", 36)  # font对象
+    # font = ImageFont.truetype("D:/python/DJango/ShoppingHome/static/bootstrap/fonts/glyphicons-halflings-regular.woff2", 36)  # font对象
     draw = ImageDraw.Draw(image)  # 创建Draw对象
     for x in range(width):  # 填充像素
         # for y in range(30, random.randint(20, 40)):

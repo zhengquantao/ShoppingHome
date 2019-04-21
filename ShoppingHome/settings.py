@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'Person.apps.PersonConfig',
     'Business.apps.BusinessConfig',
     'Chat.apps.ChatConfig',
+    'Seckill.apps.SeckillConfig',
+    # 'channels'
 ]
 
 MIDDLEWARE = [
@@ -146,7 +148,9 @@ CACHES = {
         # 'TIMEOUT': 60,
     }
 }
-
+# 3.设置redis存储django的session信息
+# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+# SESSION_CACHE_ALIAS = "default"
 # 缓存
 # CACHES = {
 #     'back': {
@@ -159,6 +163,9 @@ CACHES = {
 #     }
 # }
 
+# 允许每个单独的视图使用websocket
+# WEBSOCKET_ACCEPT_ALL = True
+
 
 # 支付相关配置
 APPID = "2016092300578584"  # 填写自己ID
@@ -166,4 +173,20 @@ NOTIFY_URL = "http://127.0.0.1:8000/pay/update_order/"
 RETURN_URL = "http://127.0.0.1:8000/pay/update_status/"
 PRI_KEY_PATH = "global_tools/keys/private_keys.txt"
 PUB_KEY_PATH = "global_tools/keys/public_keys.txt"
+
+
+redis_host = os.environ.get('REDIS_HOST', 'localhost')
+# Channel layer definitions
+# http://channels.readthedocs.io/en/latest/topics/channel_layers.html
+CHANNEL_LAYERS = {
+    "default": {
+        # This example app uses the Redis channel layer implementation channels_redis
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [(redis_host, 6379)],
+        },
+    },
+}
+
+# ASGI_APPLICATION = "NetWorkMonitor.routing.application"
 
