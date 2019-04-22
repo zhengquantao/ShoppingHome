@@ -6,3 +6,5 @@ this is  a website about shopping
 #               第三次     QPS 2633
 
 # 学生linux未加redis缓存  max-QPS：130 平均：50
+![login](https://github.com/zhengquantao/ShoppingHome/master/static/images/logo.jpg)
+
