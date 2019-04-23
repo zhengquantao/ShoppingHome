@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from Login.models import Chat, UserInfo, Binfo
 from global_tools.login_decorate import login
+from django.views.decorators.cache import cache_page
 # from dwebsocket.decorators import accept_websocket
 from django.core import serializers
 import json
@@ -47,6 +48,7 @@ def update(request):
 
 
 # 把数据从数据库取出放回到页面上
+@cache_page(2)
 def change(request):
     user = request.GET.get('user')
     to = request.GET.get('to')
@@ -67,7 +69,7 @@ def change(request):
             else:  # 不是就抛出
                 return JsonResponse({})
         else:
-            return JsonResponse({})
+            return JsonResponse({"status": 1})
 
     else:  # 商家发的请求
         if count != Chat.objects.filter(uid__name=to).count():
@@ -81,7 +83,7 @@ def change(request):
                 return JsonResponse({})
 
         else:
-            return JsonResponse({})
+            return JsonResponse({"status": 1})
 
     # one_message = serializers.serialize('json', message)  # 将queryset对象转成json格式
     # print(one_message)

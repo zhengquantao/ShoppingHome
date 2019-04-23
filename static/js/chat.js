@@ -38,9 +38,11 @@ $('#send_message').click(function () {
 });
 
 //更新数据
-setInterval(function(){
+var count_number = 0;
+clearSend = setInterval(function(){
     $.get('/chat/change/', {'user': $('#chat_user').text(), 'to': $('#to').text()}, function(data){
-        if(data){
+
+        if(!data.status){
             if(data.who_send == '1'){
 
                 $('.chat_message').append("<div class=\"row\" style=\"margin: 0\">\n" +
@@ -78,6 +80,13 @@ setInterval(function(){
                 console.log("这个是服务端的")
             }
 
+        }else{
+            //3分钟没有发就断连
+            count_number++;
+            if (count_number == 200){
+                $('.chat_message').append("<div style='text-align:center;color:red;'>由于长时间没有发消息，连接自动关闭了。如果想要重新使用，请关闭重新打开</div>");
+                clearInterval(clearSend);
+            }
 
         }
     })
