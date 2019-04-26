@@ -178,15 +178,15 @@ PUB_KEY_PATH = "global_tools/keys/public_keys.txt"
 redis_host = os.environ.get('REDIS_HOST', 'localhost')
 # Channel layer definitions
 # http://channels.readthedocs.io/en/latest/topics/channel_layers.html
-CHANNEL_LAYERS = {
-    "default": {
-        # This example app uses the Redis channel layer implementation channels_redis
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [(redis_host, 6379)],
-        },
-    },
-}
+# CHANNEL_LAYERS = {
+#     "default": {
+#         # This example app uses the Redis channel layer implementation channels_redis
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [(redis_host, 6379)],
+#         },
+#     },
+# }
 
 # ASGI_APPLICATION = "NetWorkMonitor.routing.application"
 

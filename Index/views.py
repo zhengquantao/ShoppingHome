@@ -9,7 +9,7 @@ from django.core.cache import cache
 # cache.set('name', 'password', 300)
 # name = cache.get('name')
 
-@cache_page(60*10)
+# @cache_page(60*10)
 def index(request):
     # user = request.GET.get('user')  #
     # print('------', request.user)

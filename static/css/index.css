@@ -86,3 +86,12 @@
     list-style-type: none;
     cursor:pointer;
 }
+.item-shadow:hover{
+    webkit-transform: scale(0.95);
+    transform: scale(0.95);
+    -webkit-transition: transform .4s ease-in-out;
+    -webkit-transition: -webkit-transform .4s ease-in-out;
+    transition: -webkit-transform .4s ease-in-out;
+    transition: transform .4s ease-in-out;
+    transition: transform .4s ease-in-out,-webkit-transform .4s ease-in-out;
+}
