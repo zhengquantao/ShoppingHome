@@ -103,3 +103,9 @@
     background-color: green;
 
 }
+
+.proxy-login{
+    height:30px;
+    width:30px;
+    cursor:pointer;
+}

@@ -40,6 +40,14 @@
                 </div>
             </div>
         </form>
+        <div style="padding-top: 10px;">
+            <span>第三方登录</span>
+            <div style="padding-left: 10px;">
+                <a href="https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=101576925&redirect_uri=http://127.0.0.1:8000/login/qq&scope=get_user_info"><img class="proxy-login" src="/static/images/qq.jpg" alt="QQ"></a>
+                <a href="https://api.weibo.com/oauth2/authorize?client_id=3214515364&redirect_uri=http://127.0.0.1:8000/login/weibo/"><img class="proxy-login" src="/static/images/weibo.jpg" alt="weibo"></a>
+                <a href="http://127.0.0.1:8000/login/weixin/"><img class="proxy-login" src="/static/images/weixin.png" alt="weixi"></a>
+            </divp>
+        </div>
         <div>
             <button class="btn" id="login_btn">按 钮</button>
         </div>

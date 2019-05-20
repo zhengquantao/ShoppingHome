@@ -9,6 +9,7 @@ import redis
 # 数据过大 会爆栈
 pool = redis.ConnectionPool(host='localhost', port=6379, max_connections=1000)
 conn = redis.Redis(connection_pool=pool)
+
 ret = conn.hscan_iter('k2', count=100)
 for item in ret:
     print(item)
