@@ -4,7 +4,7 @@ from .models import UserInfo
 from global_tools.pwd import hashpwd
 from global_tools.image import img
 from global_tools.send_email import sender_email
-from global_tools.login_key import weibo, qq, weixin
+from global_tools.login_key import weibo, qq, weixin, proxy_urls
 import requests
 import json
 import uuid
@@ -13,6 +13,7 @@ from django.core.cache import cache
 
 def login(request):
     code_item = ''
+
     if request.method == "GET":
         user = request.COOKIES.get('user', '')
         pwd = request.COOKIES.get('pwd', '')
@@ -22,7 +23,8 @@ def login(request):
         # print(code_item)
         request.session['code'] = code_item
         img_path = '/static/images/code.jpg'
-        return render(request, 'login/login.html', {'user': user, 'pwd': pwd, 'img_path': img_path})
+        proxy_url = proxy_urls()
+        return render(request, 'login/login.html', {'user': user, 'pwd': pwd, 'img_path': img_path, "proxy_url": proxy_url})
 
     user = request.POST.get('user')
     pwd = request.POST.get('pwd')
@@ -199,7 +201,7 @@ def proxy_qq(request):
     get_Access_token_url = "https://graph.qq.com/oauth2.0/token?grant_type=authorization_code&client_id={}&client_secret={}&redirect_uri={}&code={}".format(
         client_id, client_secret, redirect_uri, code)
     response = requests.get(url=get_Access_token_url).text
-    print(response)
+    # print(response)
     # FFFB91C30F6F87EA5BF9570AEC2E23F & expires_in = 7776000 & refresh_token = 7
     # F135B51779C7595DED58D85C87419CE
     # print(access_token)
@@ -244,3 +246,52 @@ def proxy_qq(request):
 
 def proxy_weixin(request):
     return HttpResponse("error")
+    code = request.GET.get('code')
+    client_id, client_secret = weixin()
+    # 请求得到access_token
+    redirect_uri = "http://127.0.0.1:8000/login/weixin/"
+    get_Access_token_url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid={}&secret={}&code={}&grant_type=authorization_code".format(
+        client_id, client_secret, code)
+    response = requests.get(url=get_Access_token_url).text
+    # print(response)
+    # FFFB91C30F6F87EA5BF9570AEC2E23F & expires_in = 7776000 & refresh_token = 7
+    # F135B51779C7595DED58D85C87419CE
+    # print(access_token)
+    access_token = response.split('&')[0]
+    access_token = access_token[13:]
+
+    # 获取openid
+    get_open_id_url = "".format(
+        access_token)
+    response_open_id = requests.get(url=get_open_id_url).text
+    # print(response_open_id)
+    # callback({"client_id": "101576925", "openid": "B3F2C9D7A081D39936017FF97166052A"});
+    response_open_id_dict = eval(response_open_id[9:-3])
+    open_id = response_open_id_dict.get('openid')
+    # 获取个人信息
+    get_user_info_url = "https://graph.qq.com/user/get_user_info?access_token={}&oauth_consumer_key={}&openid={}".format(
+        access_token, client_id, open_id
+    )
+
+    response_user_info = requests.get(url=get_user_info_url).text
+    response_user_info = json.loads(response_user_info)
+    user = response_user_info['nickname']
+
+    # 存入数据库
+    is_user = UserInfo.objects.filter(name=user)
+    if is_user:
+        token = str(uuid.uuid4())
+        is_user.update(password=token)
+    else:
+        token = str(uuid.uuid4())
+        UserInfo.objects.create(name=user, password=token)
+
+    # 拿到请求路径
+    # path = request.get_host()
+    # print(is_safe_url("http://127.0.0.1:8080/home", allowed_hosts={"127.0.0.1:8080"}))
+    request.session['user'] = user
+    redirect_url = redirect("http://127.0.0.1:8000")
+    redirect_url.set_cookie("name", user.encode('utf-8').decode('latin-1'))
+    redirect_url.set_cookie("token", token)
+
+    return redirect_url
