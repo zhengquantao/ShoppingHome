@@ -95,3 +95,8 @@
     transition: transform .4s ease-in-out;
     transition: transform .4s ease-in-out,-webkit-transform .4s ease-in-out;
 }
+
+/* 动图样式 */
+.loading {
+ background: url('/static/images/loading-1.gif');
+}

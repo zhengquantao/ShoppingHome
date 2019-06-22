@@ -3,13 +3,15 @@ from django.http import JsonResponse
 from Login.models import *
 from global_tools.page import Page
 from django.views.decorators.cache import cache_page
+from django.core import serializers
+import json
 from django.core.cache import cache
 
 
 # cache.set('name', 'password', 300)
 # name = cache.get('name')
 
-@cache_page(60*10)
+@cache_page(2)
 def index(request):
     # user = request.GET.get('user')  #
     # print('------', request.user)
@@ -122,4 +124,21 @@ def ticket_update(request):
     except:
         ret['msg'] = "领取失败"
     return JsonResponse(ret)
+
+
+def waterfall(request):
+    number = request.GET.get('number')
+    guess_like = ClassList.objects.all().values("l_number", "name", "img_url", "color", "price")[int(number):int(number)+28]
+    ret = {"code": 1000}
+    if guess_like:
+        data = []
+        for item in guess_like:
+            data.append(item)
+        ret['data'] = data
+        print(ret)
+        return JsonResponse(ret)
+    else:
+        ret['code'] = 1001
+        ret['data'] = "没有更多了哦"
+        return JsonResponse(ret)
 

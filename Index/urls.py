@@ -7,6 +7,8 @@ urlpatterns = [
     url(r'^search/', views.search),
     url(r'^ticket/update/', views.ticket_update),
     url(r'^ticket/', views.ticket),
+    url(r'^waterfall/', views.waterfall),
+
     # url(r'^seckill/$', views.seckill),
     url(r'^$', views.index),
 

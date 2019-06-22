@@ -727,3 +727,76 @@ $('#kill-pay').click(function(){
     var item_lists = $('.kill_item_name').text() + ',' + $('.kill_item_l_number').text() + ',' + 1 + ',' + $('.kill_price').text();
     location.href = '/pay/?price=' + $('.kill_price').text() + '&item=' + item_lists;
 });
+
+/**
+ *  Waterfall flow
+ */
+
+
+function loading(e) {
+    if (e) {
+        $(".body").append(
+            "<div id='body'>" +
+            "<div id='mark' style='opacity:0.5;position:fixed;z-index:1;left:0;top:0;height: 100%;width: 100%; background-color: #fff'>" + "</div>" +
+            "<div class='loading'  style='z-index: 2;height:32px; width:32px;position:fixed;border-radius:2px;top:50%;left:50%;'>" +
+            "<div class='alert-mess' style='line-height:10;width: 100%;text-align: center;font-size: 10px;color:black'>" + e + "</div>"
+            + "</div>");
+    }else{
+        $('#body').remove()
+    }
+    //点击模版关闭
+    $('#mark').click(function () {
+        $('#body').remove()
+    });
+}
+
+PAGE = 0
+
+function sendTo(){
+    $.ajax({
+            url:"/waterfall/",
+            type:"GET",
+            data:{number: PAGE*28},
+            dataType:"JSON",
+            success:function (data) {
+                 //准备请求数据，显示模态框
+                loading("加载中");
+                //console.log(data)
+                if(data.code==1000){
+                    for(item of data.data){
+                         $('.guess-like').append(
+                             "<div class='col-md-3 item-shadow' style='height: 320px;'>" +
+                             '<a href="/detail/?id='+ item.l_number +'">'+
+                                '<div style="height:75%;">'+
+                                    '<img src="'+ item.img_url + '"style="height:100%;width: 100%;" alt="">'+
+                                '</div><p style="text-align:center">'+item.name+'</p><p style="text-align:center;">'+item.price+'</p></a>'+
+                             "</div>"
+                        )
+                    }
+                    loading();
+                }
+                if(data.code==1001){
+                    $('.guess-like').append(
+                        "<div class='col-md-12' style='height:40px;text-align:center;line-height: 40px;color:#eee;'>"+data.data+"</div>"
+                    )
+                }
+            }
+
+        })
+}
+
+$(window).scroll(function(){
+    // console.log('document',$(document).height())
+    // console.log('window', $(window).height())
+    // console.log('top',$(window).scrollTop())
+    var docHeight = $(document).height()
+    var winHeigth = $(window).height()
+    var scrollTop = $(window).scrollTop()
+    if (winHeigth + scrollTop >= docHeight){
+        PAGE++;
+        sendTo()
+    }
+})
+
+
+
