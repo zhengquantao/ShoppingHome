@@ -16,7 +16,7 @@ def sender_email(receiver):
     mail_server = 'smtp.qq.com'
     port = '25'
     sender = '1483906080@qq.com'
-    sender_pass_code = 'ncgwgjkxlisajagi'
+    sender_pass_code = 'cewotngmphloijab'
     mail_msg = random.sample(string.digits, 5)
     check_email_code = ''  # 要发送的内容
     for item in mail_msg:

@@ -45,7 +45,7 @@ def pay_ali(request):
     alipay = aliPay()  # 调用上面的信息
 
     # price = float(request.POST.get('price'))
-    out_trade_no = 'x2' + str(time.time())
+    out_trade_no = time.strftime("%Y%m%d", time.gmtime()) + '00' + str(int(time.time()))
     # 价格，购买的商品加密
     # 拼接成URL
     query_params = alipay.direct_pay(

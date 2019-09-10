@@ -3,7 +3,7 @@
 <div class="row">
 {% csrf_token %}
     {% for item in item_lists_message %}
-<div class="col-md-11 col-md-offset-1" style="height:200px;border:1px solid #eee;">
+<div class="col-md-11 col-md-offset-1" style="min-height:200px;border:1px solid #eee;">
     <div class="col-md-2">
         <img src="{{ item.0.goods__img_url }}" style="height:100%; width:100%;border-radius:5px;">
     </div>
